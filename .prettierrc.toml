@@ -1,0 +1,7 @@
+useTabs = true # because the server uses tabs, and for developer accessibility
+singleQuote = false
+semi = true
+trailingComma = "all"
+bracketSpacing = true
+jsxBracketSameLine = false
+arrowParens = "always"
