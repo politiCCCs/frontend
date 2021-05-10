@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import ReactMapGL, { Source, Layer, MapEvent } from "react-map-gl";
 import { useEffect, useState } from "react";
-import Spinner from "react-bootstrap/Spinner";
-import "./Map.css";
+import { Spinner } from "@blueprintjs/core";
 import { electorateBorders, electorateFills } from "./layerStyles";
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN!;
@@ -101,7 +100,7 @@ export const Map = (): JSX.Element => {
 			</ReactMapGL>
 		);
 	} else {
-		content = <Spinner animation="border" role="status" />;
+		content = <Spinner />;
 	}
 
 	return content;
