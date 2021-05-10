@@ -7,9 +7,9 @@ export const electorateFills: LayerProps = {
 		"fill-color": "#627BC1",
 		"fill-opacity": [
 			"case",
-			["boolean", ["feature-state", "hover"], false],
-			1,
-			0.5,
+			["boolean", ["feature-state", "clicked"], false],
+			0.8,
+			0.4,
 		],
 	},
 };

@@ -15,6 +15,7 @@
 		"prettier"
 	],
 	"rules": {
+		"no-param-reassign": "off",
 		"spaced-comment": "error",
 		"arrow-body-style": "off",
 		"react/react-in-jsx-scope": "off",
