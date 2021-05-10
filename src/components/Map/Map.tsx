@@ -3,7 +3,7 @@ import ReactMapGL, { Source, Layer, MapEvent } from "react-map-gl";
 import { useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import "./Map.css";
-import { electorateBorders, electorateFills } from "./styles";
+import { electorateBorders, electorateFills } from "./layerStyles";
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN!;
 
