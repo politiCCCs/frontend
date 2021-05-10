@@ -1,32 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import ReactMapGL, { Source, Layer, LayerProps, MapEvent } from "react-map-gl";
+import ReactMapGL, { Source, Layer, MapEvent } from "react-map-gl";
 import { useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import "./Map.css";
+import { electorateBorders, electorateFills } from "./styles";
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN!;
-
-const layerStyle: LayerProps = {
-	id: "data",
-	type: "fill",
-	paint: {
-		"fill-color": {
-			property: "percentile",
-			stops: [
-				[0, "#3288bd"],
-				[1, "#66c2a5"],
-				[2, "#abdda4"],
-				[3, "#e6f598"],
-				[4, "#ffffbf"],
-				[5, "#fee08b"],
-				[6, "#fdae61"],
-				[7, "#f46d43"],
-				[8, "#d53e4f"],
-			],
-		},
-		"fill-opacity": 0.8,
-	},
-};
 
 type GeoJSONType = Source["props"]["data"];
 
@@ -107,7 +86,8 @@ export const Map = (): JSX.Element => {
 				mapboxApiAccessToken={MAPBOX_TOKEN}
 			>
 				<Source id="my-data" type="geojson" data={geoJSON}>
-					<Layer {...layerStyle} />
+					<Layer {...electorateFills} />
+					<Layer {...electorateBorders} />
 				</Source>
 
 				{hoverInfo && (
@@ -125,4 +105,4 @@ export const Map = (): JSX.Element => {
 	}
 
 	return content;
-};;
+};
