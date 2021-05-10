@@ -1,0 +1,1 @@
+export { ElectoratePage } from "./Electorate";

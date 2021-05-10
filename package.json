@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@blueprintjs/core": "^3.44.2",
+    "@blueprintjs/icons": "^3.26.0",
     "@blueprintjs/table": "^3.8.31",
     "@danmarshall/deckgl-typings": "^4.9.2",
     "@deck.gl/react": "^8.4.16",
