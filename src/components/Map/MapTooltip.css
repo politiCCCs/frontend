@@ -1,0 +1,15 @@
+.map-tooltip {
+	position: absolute;
+	z-index: 9;
+	background: rgba(0, 0, 0, 0.8);
+	margin: 8px;
+	padding: 4px;
+	color: #fff;
+	max-width: 300px;
+	font-size: 10px;
+	pointer-events: none;
+
+	display: grid;
+	grid-template-columns: auto auto;
+	column-gap: 10px;
+}

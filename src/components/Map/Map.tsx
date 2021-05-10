@@ -3,32 +3,12 @@ import ReactMapGL, { Source, Layer, MapEvent } from "react-map-gl";
 import { useEffect, useState } from "react";
 import { Spinner } from "@blueprintjs/core";
 import { electorateBorders, electorateFills } from "./layerStyles";
+import { Feature } from "./types";
+import { MapTooltip, MapTooltipProps } from "./MapTooltip";
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN!;
 
 type GeoJSONType = Source["props"]["data"];
-
-interface HoverInfo {
-	feature: any;
-	x: number;
-	y: number;
-}
-
-interface FeatureProperties {
-	Actual: number;
-	Area_SqKm: number;
-	Australian: number;
-	Elect_div: string;
-	Numccds: number;
-	Projected: number;
-	Sortname: string;
-	State: string;
-	Total_Popu: number;
-}
-
-interface Feature {
-	properties: FeatureProperties;
-}
 
 export const Map = (): JSX.Element => {
 	const [error, setError] = useState("");
@@ -40,13 +20,15 @@ export const Map = (): JSX.Element => {
 		zoom: 2,
 	});
 
-	const [hoverInfo, setHoverInfo] = useState<HoverInfo | null>(null);
+	const [tooltipProps, setTooltipProps] = useState<MapTooltipProps | null>(
+		null,
+	);
 
 	const onHover = ({ features, srcEvent }: MapEvent): void => {
 		const { offsetX, offsetY } = srcEvent as MouseEvent;
 		const hoveredFeature: Feature = features && features[0];
 
-		setHoverInfo(
+		setTooltipProps(
 			hoveredFeature?.properties.Elect_div !== undefined
 				? {
 						feature: hoveredFeature,
@@ -89,14 +71,7 @@ export const Map = (): JSX.Element => {
 					<Layer {...electorateBorders} />
 				</Source>
 
-				{hoverInfo && (
-					<div
-						className="tooltip"
-						style={{ left: hoverInfo.x, top: hoverInfo.y }}
-					>
-						<div>{hoverInfo.feature.properties.toString()}</div>
-					</div>
-				)}
+				{tooltipProps !== null && <MapTooltip {...tooltipProps} />}
 			</ReactMapGL>
 		);
 	} else {
