@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@danmarshall/deckgl-typings": "^4.9.2",
+    "@deck.gl/react": "^8.4.16",
     "@loaders.gl/core": "^2.3.13",
     "@loaders.gl/shapefile": "^2.3.13",
     "@reduxjs/toolkit": "^1.5.1",

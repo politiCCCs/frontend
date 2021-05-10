@@ -1,16 +1,56 @@
-import ReactMapGL, { Source, Layer, LayerProps } from "react-map-gl";
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import ReactMapGL, { Source, Layer, LayerProps, MapEvent } from "react-map-gl";
 import { useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
+import "./Map.css";
+
+const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN!;
 
 const layerStyle: LayerProps = {
-	id: "point",
-	type: "line",
+	id: "data",
+	type: "fill",
 	paint: {
-		"line-color": "#007cbf",
+		"fill-color": {
+			property: "percentile",
+			stops: [
+				[0, "#3288bd"],
+				[1, "#66c2a5"],
+				[2, "#abdda4"],
+				[3, "#e6f598"],
+				[4, "#ffffbf"],
+				[5, "#fee08b"],
+				[6, "#fdae61"],
+				[7, "#f46d43"],
+				[8, "#d53e4f"],
+			],
+		},
+		"fill-opacity": 0.8,
 	},
 };
 
 type GeoJSONType = Source["props"]["data"];
+
+interface HoverInfo {
+	feature: any;
+	x: number;
+	y: number;
+}
+
+interface FeatureProperties {
+	Actual: number;
+	Area_SqKm: number;
+	Australian: number;
+	Elect_div: string;
+	Numccds: number;
+	Projected: number;
+	Sortname: string;
+	State: string;
+	Total_Popu: number;
+}
+
+interface Feature {
+	properties: FeatureProperties;
+}
 
 export const Map = (): JSX.Element => {
 	const [error, setError] = useState("");
@@ -22,6 +62,24 @@ export const Map = (): JSX.Element => {
 		zoom: 2,
 	});
 
+	const [hoverInfo, setHoverInfo] = useState<HoverInfo | null>(null);
+
+	const onHover = ({ features, srcEvent }: MapEvent): void => {
+		const { offsetX, offsetY } = srcEvent as MouseEvent;
+		const hoveredFeature: Feature = features && features[0];
+
+		setHoverInfo(
+			hoveredFeature?.properties.Elect_div !== undefined
+				? {
+						feature: hoveredFeature,
+						x: offsetX,
+						y: offsetY,
+				  }
+				: null,
+		);
+	};
+
+	// Fetch the shapefile
 	useEffect(() => {
 		fetch("/shapefile")
 			.then((res) => res.json())
@@ -45,11 +103,21 @@ export const Map = (): JSX.Element => {
 				width="100vw"
 				height="100vh"
 				onViewportChange={setViewport}
-				onClick={(e) => console.log(e)}
+				onHover={onHover}
+				mapboxApiAccessToken={MAPBOX_TOKEN}
 			>
 				<Source id="my-data" type="geojson" data={geoJSON}>
 					<Layer {...layerStyle} />
 				</Source>
+
+				{hoverInfo && (
+					<div
+						className="tooltip"
+						style={{ left: hoverInfo.x, top: hoverInfo.y }}
+					>
+						<div>{hoverInfo.feature.properties.toString()}</div>
+					</div>
+				)}
 			</ReactMapGL>
 		);
 	} else {
@@ -57,4 +125,4 @@ export const Map = (): JSX.Element => {
 	}
 
 	return content;
-};
+};;
