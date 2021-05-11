@@ -9,3 +9,5 @@ export const store = configureStore({
 		ui: ui.reducer,
 	},
 });
+
+export type Store = ReturnType<typeof store.getState>;

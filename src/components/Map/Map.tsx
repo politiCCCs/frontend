@@ -66,9 +66,7 @@ export const Map = (): JSX.Element => {
 				clicked: true,
 			});
 			setPriorSelectedFeature(selectedFeature);
-			dispatch(
-				store.actions.setElectorate(selectedFeature.properties.Elect_div),
-			);
+			dispatch(store.actions.setElectorate(selectedFeature.properties));
 		}
 	};
 

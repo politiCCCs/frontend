@@ -1,0 +1,15 @@
+.row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	border-bottom: 1px solid black;
+    padding: 4px;
+}
+
+.row:hover {
+	background-color: #e6ecff;
+}
+
+.header {
+	font-weight: bold;
+}
