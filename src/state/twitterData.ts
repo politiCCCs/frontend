@@ -69,8 +69,8 @@ export const fetchLikes = fetchData("likes");
 export const fetchRetweets = fetchData("retweets");
 export const fetchSentiment = fetchData("sentiment");
 
-export const data = createSlice({
-	name: "data",
+export const twitterData = createSlice({
+	name: "twitterData",
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
