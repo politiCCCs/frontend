@@ -22,10 +22,11 @@ interface Count {
 	sumsqr: number;
 }
 
-interface PoliticianData {
+export interface PoliticianData {
 	likes?: Count;
 	retweets?: Count;
 	sentiment?: Count;
+	count?: Count;
 }
 
 interface PoliticianDataState {
@@ -59,6 +60,7 @@ const fetchData = (dataKey: keyof PoliticianData) =>
 		return data as CouchDBData<Count>;
 	});
 
+export const fetchCount = fetchData("count");
 export const fetchLikes = fetchData("likes");
 export const fetchRetweets = fetchData("retweets");
 export const fetchSentiment = fetchData("sentiment");
@@ -69,6 +71,7 @@ export const twitterData = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
+			.addCase(fetchCount.fulfilled, loadPoliticianPayload("count"))
 			.addCase(fetchLikes.fulfilled, loadPoliticianPayload("likes"))
 			.addCase(fetchRetweets.fulfilled, loadPoliticianPayload("retweets"))
 			.addCase(fetchSentiment.fulfilled, loadPoliticianPayload("sentiment"));

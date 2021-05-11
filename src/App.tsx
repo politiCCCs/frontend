@@ -5,13 +5,19 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ElectoratePage } from "pages/Electorate";
 import { Home } from "pages/Home";
 import { Header } from "components/Header";
-import { fetchLikes, fetchRetweets, fetchSentiment } from "state/twitterData";
+import {
+	fetchLikes,
+	fetchRetweets,
+	fetchSentiment,
+	fetchCount,
+} from "state/twitterData";
 import { fetchCandidates, fetchNames } from "state/candidates";
 
 const useFetching = (): void => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		dispatch(fetchCount());
 		dispatch(fetchLikes());
 		dispatch(fetchRetweets());
 		dispatch(fetchSentiment());

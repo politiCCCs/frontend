@@ -14,7 +14,8 @@ interface CandidateRow {
 	HistoricElected: string;
 }
 
-interface Candidate extends Partial<Omit<CandidateRow, "Surname" | "GivenNm">> {
+export interface Candidate
+	extends Partial<Omit<CandidateRow, "Surname" | "GivenNm">> {
 	handle?: string;
 }
 
