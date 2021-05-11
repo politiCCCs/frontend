@@ -21,9 +21,14 @@ interface Candidate extends Partial<Omit<CandidateRow, "Surname" | "GivenNm">> {
 interface CandidatesState {
 	handleToName: Record<string, string>;
 	candidates: Record<string, Candidate>;
+	electorates: Record<string, string[]>;
 }
 
-const initialState: CandidatesState = { handleToName: {}, candidates: {} };
+const initialState: CandidatesState = {
+	handleToName: {},
+	candidates: {},
+	electorates: {},
+};
 
 export const fetchNames = createAsyncThunk(
 	"candidates/fetchNames",
@@ -44,6 +49,7 @@ const loadNames = (
 
 			state.handleToName[handle] = user;
 
+			// Create the user if it doesn't exist
 			if (!Object.prototype.hasOwnProperty.call(state.candidates, user)) {
 				state.candidates[user] = {};
 			}
@@ -70,7 +76,17 @@ const loadCandidates = (
 		const { GivenNm, Surname, ...data } = row;
 		const name = `${GivenNm} ${Surname}`;
 
+		// Save the candidate's data
 		state.candidates[name] = { ...state.candidates[name], ...data };
+
+		// Update the electoral list
+		if (
+			!Object.prototype.hasOwnProperty.call(state.electorates, data.DivisionNm)
+		) {
+			state.electorates[data.DivisionNm] = [];
+		}
+
+		state.electorates[data.DivisionNm]?.push(name);
 	});
 
 	stream.write(payload);
