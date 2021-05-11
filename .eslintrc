@@ -15,13 +15,18 @@
 		"prettier"
 	],
 	"rules": {
+		"no-param-reassign": "off",
 		"spaced-comment": "error",
 		"arrow-body-style": "off",
 		"react/react-in-jsx-scope": "off",
 		"no-console": "warn",
+		"react/jsx-props-no-spreading": "off",
 		"@typescript-eslint/member-ordering": "error",
 		"@typescript-eslint/no-non-null-assertion": "off",
 		"@typescript-eslint/no-empty-function": "warn",
+		"@typescript-eslint/no-unsafe-call": "off",
+		"@typescript-eslint/no-floating-promises": "off",
+		"@typescript-eslint/no-unsafe-assignment": "off",
 		"@typescript-eslint/explicit-function-return-type": [
 			"error",
 			{
@@ -29,7 +34,7 @@
 			}
 		],
 		"@typescript-eslint/no-unused-vars": [
-			"error",
+			"warn",
 			{
 				"ignoreRestSiblings": true,
 				"varsIgnorePattern": "^_"

@@ -1,0 +1,11 @@
+.electorateWrapper {
+	display: flex;
+	flex-direction: row;
+}
+
+.dataPane {
+	width: 400px;
+}
+
+.mapPane {
+}

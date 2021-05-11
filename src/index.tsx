@@ -1,12 +1,23 @@
+import "mapbox-gl/dist/mapbox-gl.css";
+import "./index.css";
+
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import { Provider } from "react-redux";
+import { MapContext } from "react-map-gl";
 import { App } from "./App";
+import { store } from "./state";
 import { reportWebVitals } from "./reportWebVitals";
 
 ReactDOM.render(
 	<React.StrictMode>
-		<App />
+		{/*
+		// @ts-expect-error */}
+		<MapContext.Provider>
+			<Provider store={store}>
+				<App />
+			</Provider>
+		</MapContext.Provider>
 	</React.StrictMode>,
 	document.getElementById("root"),
 );
