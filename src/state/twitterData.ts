@@ -39,20 +39,13 @@ export interface DataState {
 const initialState: DataState = { data: {} };
 
 // Load action payload into state
-const loadPoliticianPayload = <K extends keyof PoliticianData>(dataKey: K) => <
-	P extends PoliticianData[K]
->(
+const loadPoliticianPayload = <K extends keyof PoliticianData>(dataKey: K) => (
 	state: DataState,
-	{ payload: { rows } }: LoadAction<P>,
+	{ payload: { rows } }: LoadAction<Count>,
 ): void => {
 	for (const { key, value } of rows) {
 		const userId = key[0];
-
-		if (!Object.prototype.hasOwnProperty.call(state, userId)) {
-			state.data[userId] = {};
-		}
-
-		state.data[userId]![dataKey] = { ...value };
+		state.data[userId] = { ...state.data[userId], [dataKey]: value };
 	}
 };
 
@@ -62,7 +55,8 @@ const fetchData = (dataKey: keyof PoliticianData) =>
 	createAsyncThunk(`data/fetch/${dataKey}`, async () => {
 		const url = `/${dataKey}-per-politician`;
 		const response = await fetch(url);
-		return response.json();
+		const { data } = await response.json();
+		return data as CouchDBData<Count>;
 	});
 
 export const fetchLikes = fetchData("likes");
