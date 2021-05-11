@@ -59,20 +59,37 @@ const loadNames = (
 	}
 };
 
+const parser = (csvStr: string): Promise<CandidateRow[]> =>
+	new Promise((resolve, reject) => {
+		const rows: CandidateRow[] = [];
+
+		const stream = parse({ headers: true })
+			.on("data", (data: CandidateRow) => rows.push(data))
+			.on("end", () => {
+				resolve(rows);
+			})
+			.on("error", (error) => reject(error));
+
+		stream.write(csvStr);
+		stream.end();
+	});
+
 export const fetchCandidates = createAsyncThunk(
 	"candidates/fetchCandidates",
 	async () => {
 		const url = `/votes-by-candidate.csv`;
 		const response = await fetch(url);
-		return response.text();
+		const data = await response.text();
+		const rows = await parser(data);
+		return rows;
 	},
 );
 
 const loadCandidates = (
 	state: CandidatesState,
-	{ payload }: PayloadAction<string>,
+	{ payload }: PayloadAction<CandidateRow[]>,
 ): void => {
-	const stream = parse({ headers: true }).on("data", (row: CandidateRow) => {
+	for (const row of payload) {
 		const { GivenNm, Surname, ...data } = row;
 		const name = `${GivenNm} ${Surname}`;
 
@@ -87,10 +104,7 @@ const loadCandidates = (
 		}
 
 		state.electorates[data.DivisionNm]?.push(name);
-	});
-
-	stream.write(payload);
-	stream.end();
+	}
 };
 
 export const candidates = createSlice({
