@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { names } from "./names";
+import { candidates } from "./candidates";
 
 import { twitterData } from "./twitterData";
 import { ui } from "./ui";
 
 export const store = configureStore({
 	reducer: {
-		names: names.reducer,
+		candidates: candidates.reducer,
 		twitterData: twitterData.reducer,
 		ui: ui.reducer,
 	},

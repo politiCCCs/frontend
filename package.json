@@ -8,6 +8,7 @@
     "@blueprintjs/table": "^3.8.31",
     "@danmarshall/deckgl-typings": "^4.9.2",
     "@deck.gl/react": "^8.4.16",
+    "@fast-csv/parse": "^4.3.6",
     "@loaders.gl/core": "^2.3.13",
     "@loaders.gl/shapefile": "^2.3.13",
     "@reduxjs/toolkit": "^1.5.1",

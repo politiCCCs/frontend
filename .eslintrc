@@ -20,6 +20,8 @@
 		"arrow-body-style": "off",
 		"react/react-in-jsx-scope": "off",
 		"no-console": "warn",
+		"react/display-name": "off",
+		"consistent-return": "off",
 		"react/jsx-props-no-spreading": "off",
 		"@typescript-eslint/member-ordering": "error",
 		"@typescript-eslint/no-non-null-assertion": "off",
