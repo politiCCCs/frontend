@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import { CandidateTable } from "components/CandidateTable";
 import { useSelector } from "react-redux";
 import { Store } from "state";
