@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { ElectoratePage } from "pages/Electorate";
+import { CorrelationPage } from "pages/Correlation";
 import { Home } from "pages/Home";
 import { Header } from "components/Header";
 import {
@@ -40,6 +41,9 @@ export const App = (): JSX.Element => {
 				</Route>
 				<Route exact path="/electorates">
 					<ElectoratePage />
+				</Route>
+				<Route exact path="/correlations">
+					<CorrelationPage />
 				</Route>
 			</Switch>
 		</Router>

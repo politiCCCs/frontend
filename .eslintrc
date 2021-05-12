@@ -17,6 +17,7 @@
 	"rules": {
 		"no-param-reassign": "off",
 		"spaced-comment": "error",
+		"no-continue": "off",
 		"arrow-body-style": "off",
 		"react/react-in-jsx-scope": "off",
 		"no-console": "warn",
