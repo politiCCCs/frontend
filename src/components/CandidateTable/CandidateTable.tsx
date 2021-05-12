@@ -46,7 +46,31 @@ export const CandidateTable = ({ candidates }: CandidateProps): JSX.Element => {
 				<Column name="Likes" cellRenderer={tweetRenderer("likes")} />
 				<Column name="Tweets" cellRenderer={tweetRenderer("count")} />
 				<Column name="Sentiment" cellRenderer={tweetRenderer("sentiment")} />
-				{/* <Column name="Votes" cellRenderer={candidateRenderer("")}/> */}
+				<Column
+					name="Ordinary Votes"
+					cellRenderer={candidateRenderer("OrdinaryVotes")}
+				/>
+				<Column
+					name="Absent Votes"
+					cellRenderer={candidateRenderer("AbsentVotes")}
+				/>
+				<Column
+					name="Provisional Votes"
+					cellRenderer={candidateRenderer("ProvisionalVotes")}
+				/>
+				<Column
+					name="PrePoll Votes"
+					cellRenderer={candidateRenderer("PrePollVotes")}
+				/>
+				<Column
+					name="Postal Votes"
+					cellRenderer={candidateRenderer("PostalVotes")}
+				/>
+				<Column
+					name="Total Votes"
+					cellRenderer={candidateRenderer("TotalVotes")}
+				/>
+				<Column name="Swing" cellRenderer={candidateRenderer("Swing")} />
 				<Column name="Won" cellRenderer={candidateRenderer("Elected")} />
 			</Table>
 		</div>

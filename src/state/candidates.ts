@@ -5,18 +5,44 @@ interface CandidateRow {
 	StateAb: string;
 	DivisionID: string;
 	DivisionNm: string;
-	PartyAb: string;
-	PartyNm: string;
 	CandidateID: string;
 	Surname: string;
 	GivenNm: string;
+	BallotPosition: string;
 	Elected: string;
 	HistoricElected: string;
+	PartyAb: string;
+	PartyNm: string;
+	OrdinaryVotes: string;
+	AbsentVotes: string;
+	ProvisionalVotes: string;
+	PrePollVotes: string;
+	PostalVotes: string;
+	TotalVotes: string;
+	Swing: string;
 }
 
-export interface Candidate
-	extends Partial<Omit<CandidateRow, "Surname" | "GivenNm">> {
+export interface Candidate {
 	handle?: string;
+
+	// The below are properties from CandidateRow which we care about:string; with
+	// the correct types (i.e., string numbers have been converted to numbers)
+	StateAb?: string;
+	DivisionID?: string;
+	DivisionNm?: string;
+	CandidateID?: string;
+	BallotPosition?: number;
+	Elected?: string;
+	HistoricElected?: string;
+	PartyAb?: string;
+	PartyNm?: string;
+	OrdinaryVotes?: number;
+	AbsentVotes?: number;
+	ProvisionalVotes?: number;
+	PrePollVotes?: number;
+	PostalVotes?: number;
+	TotalVotes?: number;
+	Swing?: number;
 }
 
 interface CandidatesState {
@@ -60,6 +86,8 @@ const loadNames = (
 	}
 };
 
+const toInt = (s: string): number => parseInt(s, 10);
+
 const parser = (csvStr: string): Promise<CandidateRow[]> =>
 	new Promise((resolve, reject) => {
 		const rows: CandidateRow[] = [];
@@ -91,11 +119,34 @@ const loadCandidates = (
 	{ payload }: PayloadAction<CandidateRow[]>,
 ): void => {
 	for (const row of payload) {
-		const { GivenNm, Surname, ...data } = row;
+		const {
+			GivenNm,
+			Surname,
+			BallotPosition,
+			OrdinaryVotes,
+			AbsentVotes,
+			ProvisionalVotes,
+			PrePollVotes,
+			PostalVotes,
+			TotalVotes,
+			Swing,
+			...data
+		} = row;
 		const name = `${GivenNm} ${Surname}`;
 
 		// Save the candidate's data
-		state.candidates[name] = { ...state.candidates[name], ...data };
+		state.candidates[name] = {
+			...state.candidates[name],
+			...data,
+			BallotPosition: toInt(BallotPosition),
+			OrdinaryVotes: toInt(OrdinaryVotes),
+			AbsentVotes: toInt(AbsentVotes),
+			ProvisionalVotes: toInt(ProvisionalVotes),
+			PrePollVotes: toInt(PrePollVotes),
+			PostalVotes: toInt(PostalVotes),
+			TotalVotes: toInt(TotalVotes),
+			Swing: parseFloat(Swing),
+		};
 
 		// Update the electoral list
 		if (
