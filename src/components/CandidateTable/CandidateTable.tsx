@@ -28,8 +28,8 @@ export const CandidateTable = ({ candidates }: CandidateProps): JSX.Element => {
 	const tweetRenderer = (key: keyof PoliticianData) => (
 		rowIndex: number,
 	): JSX.Element => {
-		const data = candidates[rowIndex];
-		const count = data?.tweetData?.[key]?.count;
+		const data = candidates[rowIndex]?.tweetData?.[key];
+		const count = typeof data === "object" ? data.count : data;
 		return <Cell key={`${rowIndex}`}>{count}</Cell>;
 	};
 

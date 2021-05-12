@@ -26,7 +26,7 @@ export interface PoliticianData {
 	likes?: Count;
 	retweets?: Count;
 	sentiment?: Count;
-	count?: Count;
+	count?: number;
 }
 
 interface PoliticianDataState {
