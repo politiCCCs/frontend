@@ -1,5 +1,16 @@
-import Chart from "react-apexcharts";
+import { Utils } from "@blueprintjs/table";
+import {
+	ResponsiveContainer,
+	ComposedChart,
+	Line,
+	Scatter,
+	Label,
+	Tooltip,
+	XAxis,
+	YAxis,
+} from "recharts";
 import { ComparisonData } from "state/selectors";
+import { CustomTooltip } from "./CustomTooltip";
 
 export interface ScatterPlotProps {
 	name: string;
@@ -14,54 +25,37 @@ export const ScatterPlot = ({
 	yAxisTitle,
 	points,
 }: ScatterPlotProps): JSX.Element => {
-	const scatter = {
-		name,
-		type: "scatter",
-		data: points,
-	};
-
-	const line = {
-		name: "Line of best fit",
-		type: "line",
-		data: [
-			{
-				x: 1,
-				y: 1,
-			},
-		],
-	};
-
-	const series = [scatter, line];
+	const max = points[points.length - 1]?.x;
+	const ticks = Utils.times(10, (i) => (i * max!) / 10);
 
 	return (
-		<Chart
-			series={series}
-			options={{
-				chart: {
-					height: 350,
-					type: "line",
-				},
-				fill: {
-					type: "solid",
-				},
-				markers: {
-					size: [6, 0],
-				},
-				tooltip: {
-					shared: false,
-					intersect: true,
-				},
-				legend: {
-					show: false,
-				},
-				xaxis: {
-					type: "numeric",
-					title: { text: xAxisTitle },
-				},
-				yaxis: {
-					title: { text: yAxisTitle },
-				},
-			}}
-		/>
+		<ResponsiveContainer width={500} height={400}>
+			<ComposedChart data={points}>
+				<XAxis
+					dataKey="x"
+					name={xAxisTitle}
+					type="number"
+					scale="linear"
+					ticks={ticks}
+				>
+					<Label value={xAxisTitle} position="insideBottomRight" offset={-10} />
+				</XAxis>
+
+				<YAxis dataKey="y" name={yAxisTitle} type="number" scale="linear">
+					<Label
+						value={yAxisTitle}
+						position="insideLeft"
+						angle={-90}
+						offset={-2}
+					/>
+				</YAxis>
+
+				{/*
+				// @ts-ignore */}
+				<Tooltip cursor={false} content={CustomTooltip(name)} />
+				<Scatter name={name} data={points} fill="#0fa2f7" />
+				<Line stroke="red" dataKey="bestFitY" dot={false} activeDot={false} />
+			</ComposedChart>
+		</ResponsiveContainer>
 	);
 };
