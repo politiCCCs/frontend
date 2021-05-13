@@ -1,3 +1,4 @@
+import { GenericTable, GenericTableRow } from "components/GenericTable";
 import { ComparisonData } from "state/selectors";
 import styles from "./CustomTooltip.module.css";
 
@@ -22,14 +23,12 @@ export const CustomTooltip = (dataKey: string) => ({
 	const data = payload[0]?.payload;
 	return (
 		<div className={styles.customTooltip}>
-			<div>Name: {data?.name}</div>
-			<div>
-				{dataKey}: @{data?.handle}
-			</div>
-			<div>Votes: {data?.y}</div>
-			<div>
-				{dataKey}: {data?.x}
-			</div>
+			<GenericTable>
+				<GenericTableRow header="Name">{data?.name}</GenericTableRow>
+				<GenericTableRow header="Handle">@{data?.handle}</GenericTableRow>
+				<GenericTableRow header="Votes">{data?.y}</GenericTableRow>
+				<GenericTableRow header={dataKey}>{data?.x}</GenericTableRow>
+			</GenericTable>
 		</div>
 	);
 };

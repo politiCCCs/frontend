@@ -25,8 +25,11 @@ export const ScatterPlot = ({
 	yAxisTitle,
 	points,
 }: ScatterPlotProps): JSX.Element => {
-	const max = points[points.length - 1]?.x;
-	const ticks = Utils.times(10, (i) => (i * max!) / 10);
+	const min = points[0]?.x || 0;
+	const max = points[points.length - 1]?.x || 0;
+	const diff = max - min;
+
+	const ticks = Utils.times(10, (i) => (i * diff) / 10);
 
 	return (
 		<ResponsiveContainer width={500} height={400}>
