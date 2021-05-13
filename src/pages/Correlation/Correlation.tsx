@@ -1,6 +1,8 @@
-import { ScatterPlot } from "components/ScatterPlot/ScatterPlot";
 import { useSelector } from "react-redux";
-import { createSelector } from "../../state/selectors";
+
+import { ScatterPlot } from "components/ScatterPlot/ScatterPlot";
+import { createSelector } from "state/selectors";
+import styles from "./Correlation.module.css";
 
 export const CorrelationPage = (): JSX.Element => {
 	const sentimentVsVotes = useSelector(createSelector("sentiment"));
@@ -9,7 +11,7 @@ export const CorrelationPage = (): JSX.Element => {
 	const likesVsVotes = useSelector(createSelector("likes"));
 
 	return (
-		<div>
+		<div className={styles.correlation}>
 			<ScatterPlot
 				name="Sentiment"
 				xAxisTitle="Sentiment"
