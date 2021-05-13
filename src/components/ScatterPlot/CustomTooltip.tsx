@@ -12,6 +12,15 @@ export interface CustomTooltipProps {
 	payload: Payload[];
 }
 
+// Based on https://stackoverflow.com/a/2901298/5018082
+const numberWithCommas = (x: number | undefined): string => {
+	if (x === undefined) {
+		return "";
+	}
+
+	return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+};
+
 export const CustomTooltip = (dataKey: string) => ({
 	active,
 	payload,
@@ -26,8 +35,12 @@ export const CustomTooltip = (dataKey: string) => ({
 			<GenericTable>
 				<GenericTableRow header="Name">{data?.name}</GenericTableRow>
 				<GenericTableRow header="Handle">@{data?.handle}</GenericTableRow>
-				<GenericTableRow header="Votes">{data?.y}</GenericTableRow>
-				<GenericTableRow header={dataKey}>{data?.x}</GenericTableRow>
+				<GenericTableRow header="Votes">
+					{numberWithCommas(data?.y)}
+				</GenericTableRow>
+				<GenericTableRow header={dataKey}>
+					{numberWithCommas(data?.x)}
+				</GenericTableRow>
 			</GenericTable>
 		</div>
 	);
