@@ -62,7 +62,7 @@ export const CandidateTable = ({ candidates }: CandidateProps): JSX.Element => {
 			}
 
 			const data = candidates[rowIndex]?.tweetData?.[key];
-			const count = typeof data === "object" ? data.count : data;
+			const count = typeof data === "object" ? data.sum : data;
 			return count;
 		},
 		[candidates, sortedIndexMap],

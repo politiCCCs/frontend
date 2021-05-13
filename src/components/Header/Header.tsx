@@ -34,6 +34,9 @@ export const Header = (): JSX.Element => {
 				<AnchorButton href="/electorates" icon="globe">
 					Electorates
 				</AnchorButton>
+				<AnchorButton href="/correlations" icon="regression-chart">
+					Correlations
+				</AnchorButton>
 			</Navbar.Group>
 		</Navbar>
 	);
