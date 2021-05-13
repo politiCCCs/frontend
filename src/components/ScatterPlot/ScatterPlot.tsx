@@ -70,7 +70,7 @@ export const ScatterPlot = ({
 				// @ts-ignore */}
 					<Tooltip cursor={false} content={CustomTooltip(name)} />
 					<Scatter name={name} data={points} fill="#0fa2f7" />
-					<Line stroke="red" dataKey="bestFitY" dot={false} activeDot={false} />
+					<Line stroke="red" dataKey="bestFitY" dot={false} />
 				</ComposedChart>
 			</ResponsiveContainer>
 		</div>

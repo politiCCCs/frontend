@@ -48,7 +48,7 @@ const leastSquares = (
 		xySum += p.x * p.y;
 	}
 
-	const m = (n * xySum - xSum * ySum) / (n * xSqSum - xSum * xSqSum);
+	const m = (n * xySum - xSum * ySum) / (n * xSqSum - xSum * xSum);
 	const b = (ySum - m * xSum) / n;
 
 	return (x?: number): number => {
@@ -98,7 +98,7 @@ export const createSelector = (dataKey: keyof PoliticianData) => (
 	const bestFit = leastSquares(points);
 	if (bestFit) {
 		for (const point of points) {
-			(point as ComparisonData).bestFitY = bestFit(point.y);
+			(point as ComparisonData).bestFitY = bestFit(point.x);
 		}
 	}
 	return points;

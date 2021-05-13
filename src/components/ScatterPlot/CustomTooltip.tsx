@@ -29,7 +29,7 @@ export const CustomTooltip = (dataKey: string) => ({
 		return <></>;
 	}
 
-	const data = payload[0]?.payload;
+	const data = payload?.[0]?.payload;
 	return (
 		<div className={styles.customTooltip}>
 			<GenericTable>
@@ -40,6 +40,9 @@ export const CustomTooltip = (dataKey: string) => ({
 				</GenericTableRow>
 				<GenericTableRow header={dataKey}>
 					{numberWithCommas(data?.x)}
+				</GenericTableRow>
+				<GenericTableRow header="best fit">
+					{numberWithCommas(data?.bestFitY)}
 				</GenericTableRow>
 			</GenericTable>
 		</div>
