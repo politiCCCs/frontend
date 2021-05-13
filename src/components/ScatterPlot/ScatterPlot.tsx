@@ -1,4 +1,3 @@
-import { Utils } from "@blueprintjs/table";
 import {
 	ResponsiveContainer,
 	ComposedChart,
@@ -27,13 +26,20 @@ export const ScatterPlot = ({
 }: ScatterPlotProps): JSX.Element => {
 	const min = points[0]?.x || 0;
 	const max = points[points.length - 1]?.x || 0;
-	const diff = max - min;
+	const diff = (max - min) / 10;
 
-	const ticks = Utils.times(10, (i) => (i * diff) / 10);
+	const ticks: number[] = [];
+	for (let i = min; i < max; i += diff) {
+		const rounded = parseFloat(i.toFixed(2));
+		ticks.push(rounded);
+	}
 
 	return (
 		<ResponsiveContainer width={500} height={400}>
-			<ComposedChart data={points}>
+			<ComposedChart
+				data={points}
+				margin={{ top: 20, left: 20, right: 20, bottom: 20 }}
+			>
 				<XAxis
 					dataKey="x"
 					name={xAxisTitle}

@@ -1,5 +1,5 @@
 .customTooltip {
-    background-color: rgb(202, 202, 202);
+    background-color: rgba(202, 202, 202, 0.9);
     padding: 2px;
     border-radius: 6px;
     width: 280px;
