@@ -88,7 +88,7 @@ export const createSelector = (dataKey: keyof PoliticianData) => (
 		points.push({
 			name: realName,
 			handle: twitterHandle,
-			x: typeof twitterData === "object" ? twitterData.count : twitterData,
+			x: typeof twitterData === "object" ? twitterData.sum : twitterData,
 			y: votes,
 		});
 	}
