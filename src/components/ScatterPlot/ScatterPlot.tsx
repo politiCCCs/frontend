@@ -10,6 +10,7 @@ import {
 } from "recharts";
 import { ComparisonData } from "state/selectors";
 import { CustomTooltip } from "./CustomTooltip";
+import styles from "./ScatterPlot.module.css";
 
 export interface ScatterPlotProps {
 	name: string;
@@ -35,36 +36,43 @@ export const ScatterPlot = ({
 	}
 
 	return (
-		<ResponsiveContainer width={500} height={400}>
-			<ComposedChart
-				data={points}
-				margin={{ top: 20, left: 20, right: 20, bottom: 20 }}
-			>
-				<XAxis
-					dataKey="x"
-					name={xAxisTitle}
-					type="number"
-					scale="linear"
-					ticks={ticks}
+		<div className={styles.wrapper}>
+			<h3>{name} vs. Votes</h3>
+			<ResponsiveContainer width={500} height={400}>
+				<ComposedChart
+					data={points}
+					margin={{ top: 20, left: 20, right: 20, bottom: 20 }}
 				>
-					<Label value={xAxisTitle} position="insideBottomRight" offset={-10} />
-				</XAxis>
+					<XAxis
+						dataKey="x"
+						name={xAxisTitle}
+						type="number"
+						scale="linear"
+						ticks={ticks}
+					>
+						<Label
+							value={xAxisTitle}
+							position="insideBottomRight"
+							offset={-10}
+						/>
+					</XAxis>
 
-				<YAxis dataKey="y" name={yAxisTitle} type="number" scale="linear">
-					<Label
-						value={yAxisTitle}
-						position="insideLeft"
-						angle={-90}
-						offset={-2}
-					/>
-				</YAxis>
+					<YAxis dataKey="y" name={yAxisTitle} type="number" scale="linear">
+						<Label
+							value={yAxisTitle}
+							position="insideLeft"
+							angle={-90}
+							offset={-2}
+						/>
+					</YAxis>
 
-				{/*
+					{/*
 				// @ts-ignore */}
-				<Tooltip cursor={false} content={CustomTooltip(name)} />
-				<Scatter name={name} data={points} fill="#0fa2f7" />
-				<Line stroke="red" dataKey="bestFitY" dot={false} activeDot={false} />
-			</ComposedChart>
-		</ResponsiveContainer>
+					<Tooltip cursor={false} content={CustomTooltip(name)} />
+					<Scatter name={name} data={points} fill="#0fa2f7" />
+					<Line stroke="red" dataKey="bestFitY" dot={false} activeDot={false} />
+				</ComposedChart>
+			</ResponsiveContainer>
+		</div>
 	);
 };
