@@ -38,7 +38,10 @@ const loadPoliticianPayload = <K extends keyof PoliticianData>(dataKey: K) => (
 ): void => {
 	for (const { key, value } of rows) {
 		const userId = key[0];
-		state.data[userId] = { ...state.data[userId], [dataKey]: { ...value } };
+		state.data[userId] = {
+			...state.data[userId],
+			[dataKey]: typeof value === "object" ? { ...value } : value,
+		};
 	}
 };
 
