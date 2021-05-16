@@ -55,8 +55,8 @@ export const fetchPartySentiment = fetchData<SentimentKey, SentimentVal>(
 	"sentiment",
 );
 
-export const globalData = createSlice({
-	name: "globalData",
+export const generalComparisons = createSlice({
+	name: "general",
 	initialState,
 	reducers: {},
 	extraReducers: (builder) =>
