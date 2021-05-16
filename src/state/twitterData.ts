@@ -54,7 +54,7 @@ const loadPoliticianPayload = <K extends keyof PoliticianData>(dataKey: K) => (
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const fetchData = (dataKey: keyof PoliticianData) =>
 	createAsyncThunk(`data/fetch/${dataKey}`, async () => {
-		const url = `/${dataKey}-per-politician`;
+		const url = `/politicians/${dataKey}`;
 		const response = await fetch(url);
 		const { data } = await response.json();
 		return data as CouchDBData<Count>;
