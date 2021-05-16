@@ -59,7 +59,7 @@ const leastSquares = (
 	};
 };
 
-export const createSelector = (dataKey: keyof PoliticianData) => (
+export const createPoliticianSelector = (dataKey: keyof PoliticianData) => (
 	state: Store,
 ): ComparisonData[] => {
 	const points = [];

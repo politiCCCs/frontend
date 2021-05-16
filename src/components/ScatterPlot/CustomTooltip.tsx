@@ -1,5 +1,5 @@
 import { GenericTable, GenericTableRow } from "components/GenericTable";
-import { ComparisonData } from "state/selectors";
+import { ComparisonData } from "state/politicianSelectors";
 import styles from "./CustomTooltip.module.css";
 
 interface Payload {

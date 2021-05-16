@@ -8,7 +8,7 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
-import { ComparisonData } from "state/selectors";
+import { ComparisonData } from "state/politicianSelectors";
 import { CustomTooltip } from "./CustomTooltip";
 import styles from "./ScatterPlot.module.css";
 
