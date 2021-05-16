@@ -14,6 +14,10 @@ export const partySentimentSelector = (store: Store): DataItem[] => {
 	const items: DataItem[] = [];
 
 	for (const key in store.general.sentiment) {
+		if (key === "other") {
+			continue;
+		}
+
 		if (Object.prototype.hasOwnProperty.call(store.general.sentiment, key)) {
 			const value = store.general.sentiment[key as keyof GeneralSentiment];
 

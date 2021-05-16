@@ -17,7 +17,7 @@ export interface GeneralComparisonsState {
 	sentiment: {
 		labor?: Count;
 		liberal?: Count;
-		independent?: Count;
+		other?: Count;
 	};
 }
 
@@ -42,7 +42,7 @@ const loadPartySentiment = (
 ): void => {
 	for (const { key, value } of rows) {
 		if (arrayReferenceEqual([false, false], key)) {
-			state.sentiment.independent = { ...value };
+			state.sentiment.other = { ...value };
 		} else if (arrayReferenceEqual([true, false], key)) {
 			state.sentiment.labor = { ...value };
 		} else if (arrayReferenceEqual([false, true], key)) {
