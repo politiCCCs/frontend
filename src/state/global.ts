@@ -1,0 +1,64 @@
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { arrayReferenceEqual, Count } from "./utils";
+
+// Redux action helpers
+interface CouchDBRow<K, V> {
+	key: K;
+	value: V;
+}
+
+interface CouchDBData<K, V> {
+	rows: CouchDBRow<K, V>[];
+}
+
+type LoadAction<K, V> = PayloadAction<CouchDBData<K, V>>;
+
+export interface GlobalDataState {
+	sentiment: {
+		labor?: Count;
+		liberal?: Count;
+		independent?: Count;
+	};
+}
+
+const initialState: GlobalDataState = { sentiment: {} };
+
+// Thunk
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const fetchData = <K, V>(dataKey: keyof GlobalDataState) =>
+	createAsyncThunk(`data/fetch/${dataKey}`, async () => {
+		const url = `/global/${dataKey}`;
+		const response = await fetch(url);
+		const { data } = await response.json();
+		return data as CouchDBData<K, V>;
+	});
+
+// Party sentiment
+type SentimentKey = [boolean, boolean];
+type SentimentVal = Count;
+const loadPartySentiment = (
+	state: GlobalDataState,
+	{ payload: { rows } }: LoadAction<SentimentKey, SentimentVal>,
+): void => {
+	for (const { key, value } of rows) {
+		if (arrayReferenceEqual([false, false], key)) {
+			state.sentiment.independent = { ...value };
+		} else if (arrayReferenceEqual([true, false], key)) {
+			state.sentiment.labor = { ...value };
+		} else if (arrayReferenceEqual([false, true], key)) {
+			state.sentiment.liberal = { ...value };
+		}
+	}
+};
+
+export const fetchPartySentiment = fetchData<SentimentKey, SentimentVal>(
+	"sentiment",
+);
+
+export const globalData = createSlice({
+	name: "globalData",
+	initialState,
+	reducers: {},
+	extraReducers: (builder) =>
+		builder.addCase(fetchPartySentiment.fulfilled, loadPartySentiment),
+});

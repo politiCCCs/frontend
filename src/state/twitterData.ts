@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Count } from "./utils";
 
 // Redux action helpers
 interface CouchDBRow<T> {
@@ -12,15 +13,6 @@ interface CouchDBData<T> {
 }
 
 type LoadAction<T> = PayloadAction<CouchDBData<T>>;
-
-// Slice state
-interface Count {
-	sum: number;
-	count: number;
-	min: number;
-	max: number;
-	sumsqr: number;
-}
 
 export interface PoliticianData {
 	likes?: Count;
@@ -46,7 +38,7 @@ const loadPoliticianPayload = <K extends keyof PoliticianData>(dataKey: K) => (
 ): void => {
 	for (const { key, value } of rows) {
 		const userId = key[0];
-		state.data[userId] = { ...state.data[userId], [dataKey]: value };
+		state.data[userId] = { ...state.data[userId], [dataKey]: { ...value } };
 	}
 };
 

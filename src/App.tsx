@@ -13,6 +13,7 @@ import {
 	fetchCount,
 } from "state/twitterData";
 import { fetchCandidates, fetchNames } from "state/candidates";
+import { fetchPartySentiment } from "state/global";
 
 const useFetching = (): void => {
 	const dispatch = useDispatch();
@@ -25,6 +26,8 @@ const useFetching = (): void => {
 
 		dispatch(fetchNames());
 		dispatch(fetchCandidates());
+
+		dispatch(fetchPartySentiment());
 	}, [dispatch]);
 };
 
