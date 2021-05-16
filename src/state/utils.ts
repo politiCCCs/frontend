@@ -22,3 +22,6 @@ export const arrayReferenceEqual = <T>(a: T[], b: T[]): boolean => {
 
 	return true;
 };
+
+export const capitalizeFirstLetter = (s: string): string =>
+	s.charAt(0).toUpperCase() + s.slice(1);

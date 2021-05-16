@@ -13,7 +13,7 @@ interface CouchDBData<K, V> {
 
 type LoadAction<K, V> = PayloadAction<CouchDBData<K, V>>;
 
-export interface GlobalDataState {
+export interface GeneralComparisonsState {
 	sentiment: {
 		labor?: Count;
 		liberal?: Count;
@@ -21,12 +21,12 @@ export interface GlobalDataState {
 	};
 }
 
-const initialState: GlobalDataState = { sentiment: {} };
+const initialState: GeneralComparisonsState = { sentiment: {} };
 
 // Thunk
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const fetchData = <K, V>(dataKey: keyof GlobalDataState) =>
-	createAsyncThunk(`data/fetch/${dataKey}`, async () => {
+const fetchData = <K, V>(dataKey: keyof GeneralComparisonsState) =>
+	createAsyncThunk(`general/fetch/${dataKey}`, async () => {
 		const url = `/global/${dataKey}`;
 		const response = await fetch(url);
 		const { data } = await response.json();
@@ -37,7 +37,7 @@ const fetchData = <K, V>(dataKey: keyof GlobalDataState) =>
 type SentimentKey = [boolean, boolean];
 type SentimentVal = Count;
 const loadPartySentiment = (
-	state: GlobalDataState,
+	state: GeneralComparisonsState,
 	{ payload: { rows } }: LoadAction<SentimentKey, SentimentVal>,
 ): void => {
 	for (const { key, value } of rows) {
@@ -50,6 +50,7 @@ const loadPartySentiment = (
 		}
 	}
 };
+
 
 export const fetchPartySentiment = fetchData<SentimentKey, SentimentVal>(
 	"sentiment",

@@ -1,0 +1,1 @@
+export { BarChartWrapper } from "./BarChartWrapper";
