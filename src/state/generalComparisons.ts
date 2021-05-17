@@ -1,21 +1,11 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
 	arrayReferenceEqual as arrayValueEqual,
+	CouchDBData,
 	Count,
+	LoadAction,
 	TwitterCountData,
 } from "./utils";
-
-// Redux action helpers
-interface CouchDBRow<K, V> {
-	key: K;
-	value: V;
-}
-
-interface CouchDBData<K, V> {
-	rows: CouchDBRow<K, V>[];
-}
-
-type LoadAction<K, V> = PayloadAction<CouchDBData<K, V>>;
 
 export interface GeneralComparisonsItem {
 	count?: TwitterCountData;
