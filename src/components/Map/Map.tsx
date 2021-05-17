@@ -1,21 +1,16 @@
-import ReactMapGL, { Source, Layer, MapEvent, MapContext } from "react-map-gl";
-import { useContext, useState } from "react";
-import { useDispatch } from "react-redux";
+import ReactMapGL, { Source, Layer, MapEvent } from "react-map-gl";
+import { useState } from "react";
 import { Spinner } from "@blueprintjs/core";
-import type { FeatureIdentifier, Map as MapInstance } from "mapbox-gl";
 
-import { ui as store } from "state/ui";
 import { electorateBorders, electorateFills } from "./layerStyles";
 import { Feature } from "./types";
 import { MapTooltip, MapTooltipProps } from "./MapTooltip";
 import { useShapeFile } from "./useShapeFile";
+import { useSelectedFeature } from "./useSelectedFeature";
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN!;
 
 export const Map = (): JSX.Element => {
-	const dispatch = useDispatch();
-	const { map }: { map: MapInstance } = useContext(MapContext);
-
 	const [error, setError] = useState("");
 	const geoJSON = useShapeFile(setError);
 
@@ -44,33 +39,7 @@ export const Map = (): JSX.Element => {
 		);
 	};
 
-	const [
-		priorSelectedFeature,
-		setPriorSelectedFeature,
-	] = useState<Feature | null>(null);
-	const onClick = ({ features }: MapEvent): void => {
-		const selectedFeature: Feature = features && features[0];
-
-		if (
-			selectedFeature === undefined ||
-			selectedFeature.properties.Elect_div === undefined
-		) {
-			return;
-		}
-		if (priorSelectedFeature) {
-			// it's easier to use our own type, as FeatureIdentifier is not generic
-			map.setFeatureState(
-				(priorSelectedFeature as unknown) as FeatureIdentifier,
-				{ clicked: false },
-			);
-		}
-
-		map.setFeatureState((selectedFeature as unknown) as FeatureIdentifier, {
-			clicked: true,
-		});
-		setPriorSelectedFeature(selectedFeature);
-		dispatch(store.actions.setElectorate(selectedFeature.properties));
-	};
+	const onClick = useSelectedFeature();
 
 	let content: JSX.Element;
 
