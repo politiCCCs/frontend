@@ -25,13 +25,9 @@ export const BarChartWrapper = ({
 		<div className={styles.wrapper}>
 			<h3>{name}</h3>
 
-			<BarChart
-				width={500}
-				height={400}
-				data={data}
-			>
+			<BarChart width={700} height={400} data={data}>
 				<CartesianGrid strokeDasharray="3 3" />
-				<XAxis dataKey="name" />
+				<XAxis dataKey="name" tick />
 				<YAxis />
 				<Tooltip />
 				<Legend />

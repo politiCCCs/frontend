@@ -9,6 +9,12 @@ export interface Count {
 	sumsqr: number;
 }
 
+export interface TwitterCountData {
+	likes?: Count;
+	retweets?: Count;
+	sentiment?: Count;
+}
+
 export const arrayReferenceEqual = <T>(a: T[], b: T[]): boolean => {
 	if (a.length !== b.length) {
 		return false;

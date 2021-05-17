@@ -12,9 +12,9 @@ import {
 	fetchCount,
 } from "state/twitterData";
 import { fetchCandidates, fetchNames } from "state/candidates";
-import { fetchPartySentiment } from "state/generalComparisons";
 import { GeneralComparisonPage } from "pages/GeneralComparisons";
 import { CorrelationPage } from "pages/Correlation";
+import { fetchLeaderData } from "state/generalComparisons";
 
 const useFetching = (): void => {
 	const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const useFetching = (): void => {
 		dispatch(fetchNames());
 		dispatch(fetchCandidates());
 
-		dispatch(fetchPartySentiment());
+		dispatch(fetchLeaderData());
 	}, [dispatch]);
 };
 

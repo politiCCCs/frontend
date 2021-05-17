@@ -1,33 +1,39 @@
 import { Store } from "state";
-import { GeneralComparisonsState } from "./generalComparisons";
-import { capitalizeFirstLetter } from "./utils";
+import {
+	GeneralComparisonsState,
+	GeneralComparisonsStateNameMap,
+} from "./generalComparisons";
+import { TwitterCountData } from "./utils";
 
 // Selectors helpers
 export interface DataItem {
 	name: string;
-	value: number;
+	value?: number;
 }
 
 // Sentiment
-type GeneralSentiment = GeneralComparisonsState["sentiment"];
-export const partySentimentSelector = (store: Store): DataItem[] => {
+export const generalComparisonsSelector = (
+	dataKey: keyof TwitterCountData,
+	ignore?: Set<keyof GeneralComparisonsState>,
+) => (store: Store): DataItem[] => {
 	const items: DataItem[] = [];
 
-	for (const key in store.general.sentiment) {
-		if (key === "other") {
+	let key: keyof GeneralComparisonsState;
+	for (key in store.general) {
+		if (ignore?.has(key)) {
 			continue;
 		}
 
-		if (Object.prototype.hasOwnProperty.call(store.general.sentiment, key)) {
-			const value = store.general.sentiment[key as keyof GeneralSentiment];
+		if (Object.prototype.hasOwnProperty.call(store.general, key)) {
+			const value = store.general[key];
 
 			if (value === undefined) {
 				continue;
 			}
 
 			items.push({
-				name: capitalizeFirstLetter(key),
-				value: value.sum,
+				name: GeneralComparisonsStateNameMap[key],
+				value: value[dataKey]?.sum,
 			});
 		}
 	}

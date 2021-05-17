@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Count } from "./utils";
+import { Count, TwitterCountData } from "./utils";
 
 // Redux action helpers
 interface CouchDBRow<T> {
@@ -14,10 +14,7 @@ interface CouchDBData<T> {
 
 type LoadAction<T> = PayloadAction<CouchDBData<T>>;
 
-export interface PoliticianData {
-	likes?: Count;
-	retweets?: Count;
-	sentiment?: Count;
+export interface PoliticianData extends TwitterCountData {
 	count?: number;
 }
 
