@@ -19,6 +19,7 @@ import {
 	fetchTweetsData,
 	fetchVulgarityData,
 } from "state/generalComparisons";
+import { fetchGeolocationTweets } from "state/geolocation";
 
 const useFetching = (): void => {
 	const dispatch = useDispatch();
@@ -35,6 +36,8 @@ const useFetching = (): void => {
 		dispatch(fetchLeaderData());
 		dispatch(fetchVulgarityData());
 		dispatch(fetchTweetsData());
+
+		dispatch(fetchGeolocationTweets());
 	}, [dispatch]);
 };
 
