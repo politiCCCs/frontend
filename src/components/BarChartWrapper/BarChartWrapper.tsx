@@ -8,6 +8,7 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
+import { ScaleType } from "recharts/types/util/types";
 import styles from "./BarChartWrapper.module.css";
 
 export interface BarChartWrapperProps {
@@ -15,6 +16,8 @@ export interface BarChartWrapperProps {
 	data: any;
 	children: ReactElement<BarProps>;
 }
+
+const scale: ScaleType = "sqrt";
 
 export const BarChartWrapper = ({
 	name,
@@ -27,10 +30,16 @@ export const BarChartWrapper = ({
 
 			<BarChart width={1000} height={400} data={data} layout="vertical">
 				<CartesianGrid strokeDasharray="3 3" />
-				<XAxis type="number" />
+				<XAxis type="number" scale="sqrt" domain={[0.01, "auto"]} />
 				<YAxis dataKey="name" type="category" tick width={220} />
 				<Tooltip />
-				<Legend />
+				<Legend
+					formatter={(value) => (
+						<div>
+							{value} ({scale} scale)
+						</div>
+					)}
+				/>
 				{children}
 			</BarChart>
 		</div>
