@@ -1,26 +1,26 @@
 import { Bar } from "recharts";
 import { BarChartWrapper } from "components/BarChartWrapper";
 import { useSelector } from "react-redux";
-import { generalComparisonsSelector } from "state/generalComparisonsSelectors";
+import { generalComparisonsCountSelector } from "state/generalComparisonsSelectors";
 import styles from "./GeneralComparisons.module.css";
 
 export const GeneralComparisonPage = (): JSX.Element => {
 	const sentiment = useSelector(
-		generalComparisonsSelector(
+		generalComparisonsCountSelector(
 			"sentiment",
 			new Set(["nonPolitical", "otherLeaderNonPoliticalContent"]),
 		),
 	);
 
 	const likes = useSelector(
-		generalComparisonsSelector(
+		generalComparisonsCountSelector(
 			"likes",
 			new Set(["nonPolitical", "otherLeaderNonPoliticalContent"]),
 		),
 	);
 
 	const retweets = useSelector(
-		generalComparisonsSelector(
+		generalComparisonsCountSelector(
 			"retweets",
 			new Set(["nonPolitical", "otherLeaderNonPoliticalContent"]),
 		),

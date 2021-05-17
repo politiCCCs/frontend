@@ -17,13 +17,19 @@ interface CouchDBData<K, V> {
 
 type LoadAction<K, V> = PayloadAction<CouchDBData<K, V>>;
 
+interface GeneralComparisonsItem {
+	count?: TwitterCountData;
+	vulgarity?: number;
+	tweets?: number;
+}
+
 export interface GeneralComparisonsState {
-	nonPolitical?: TwitterCountData;
-	laborLeader?: TwitterCountData;
-	liberalsLeader?: TwitterCountData;
-	greensLeader?: TwitterCountData;
-	otherLeaderPoliticalContent?: TwitterCountData;
-	otherLeaderNonPoliticalContent?: TwitterCountData;
+	nonPolitical: GeneralComparisonsItem;
+	laborLeader: GeneralComparisonsItem;
+	liberalsLeader: GeneralComparisonsItem;
+	greensLeader: GeneralComparisonsItem;
+	otherLeaderPoliticalContent: GeneralComparisonsItem;
+	otherLeaderNonPoliticalContent: GeneralComparisonsItem;
 }
 
 export const GeneralComparisonsStateNameMap: Record<
@@ -38,67 +44,106 @@ export const GeneralComparisonsStateNameMap: Record<
 	otherLeaderPoliticalContent: "Small-Party Leaders (Political)",
 };
 
-const initialState: GeneralComparisonsState = {};
+const initialState: GeneralComparisonsState = {
+	nonPolitical: {},
+	laborLeader: {},
+	liberalsLeader: {},
+	greensLeader: {},
+	otherLeaderPoliticalContent: {},
+	otherLeaderNonPoliticalContent: {},
+};
+
+// General data
+// is_leader, is_political, is_labor, is_liberals, is_greens
+type GeneralKey = [boolean, boolean, boolean, boolean, boolean];
 
 // Thunk
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const fetchData = <K, V>(dataKey: string) =>
+const fetchData = <V>(dataKey: string) =>
 	createAsyncThunk(`general/fetch/${dataKey}`, async () => {
 		const url = `/general/${dataKey}`;
 		const response = await fetch(url);
 		const { data } = await response.json();
-		return data as CouchDBData<K, V>;
+		return data as CouchDBData<GeneralKey, V>;
 	});
 
-// General data
-// is_leader, is_political, is_labor, is_liberals, is_greens
-type LeaderKey = [boolean, boolean, boolean, boolean, boolean];
-type LeaderValue = [Count, Count, Count];
-
-const loadLeader = (
+const loadGeneral = <ReturnedData>(dataKey: keyof GeneralComparisonsItem) => (
 	state: GeneralComparisonsState,
-	{ payload: { rows } }: LoadAction<LeaderKey, LeaderValue>,
+	{ payload: { rows } }: LoadAction<GeneralKey, ReturnedData>,
 ): void => {
 	for (const { key, value } of rows) {
-		if (value.length !== 3) {
-			continue;
-		}
+		let data: TwitterCountData | number;
 
-		const data = {
-			sentiment: { ...value[0] },
-			retweets: { ...value[1] },
-			likes: { ...value[2] },
-		};
+		if (Array.isArray(value)) {
+			if (value.length !== 3) {
+				continue;
+			}
+
+			data = {
+				sentiment: { ...value[0] },
+				retweets: { ...value[1] },
+				likes: { ...value[2] },
+			} as TwitterCountData;
+		} else {
+			data = value;
+		}
 
 		// completely non political
 		if (arrayValueEqual(key, [false, false, false, false, false])) {
-			state.nonPolitical = data;
+			state.nonPolitical = {
+				...state.nonPolitical,
+				[dataKey]: data,
+			};
 		} else if (arrayValueEqual(key, [true, false, false, false, false])) {
 			// Leaders tweeting out non-political things when they're not part of
 			// labor, liberals, or greens
-			state.otherLeaderNonPoliticalContent = data;
+			state.otherLeaderNonPoliticalContent = {
+				...state.otherLeaderNonPoliticalContent,
+				[dataKey]: data,
+			};
 		} else if (arrayValueEqual(key, [true, true, false, false, false])) {
 			// Leaders tweeting out political things when they're not part of labor,
 			// liberals, or greens
-			state.otherLeaderPoliticalContent = data;
+			state.otherLeaderPoliticalContent = {
+				...state.otherLeaderPoliticalContent,
+				[dataKey]: data,
+			};
 		} else if (arrayValueEqual(key, [true, true, false, false, true])) {
 			// Greens leader tweeting political things
-			state.greensLeader = data;
+			state.greensLeader = {
+				...state.greensLeader,
+				[dataKey]: data,
+			};
 		} else if (arrayValueEqual(key, [true, true, false, true, false])) {
 			// Liberals leader tweeting political things
-			state.liberalsLeader = data;
+			state.liberalsLeader = {
+				...state.liberalsLeader,
+				[dataKey]: data,
+			};
 		} else if (arrayValueEqual(key, [true, true, true, false, false])) {
 			// Labor leader tweeting political things
-			state.laborLeader = data;
+			state.laborLeader = {
+				...state.laborLeader,
+				[dataKey]: data,
+			};
 		}
 	}
 };
-export const fetchLeaderData = fetchData<LeaderKey, LeaderValue>("leaders");
+
+// Leader
+type LeaderValue = [Count, Count, Count];
+export const fetchLeaderData = fetchData<LeaderValue>("leaders");
+
+// Vulgarity
+type VulgarityValue = number;
+export const fetchVulgarityData = fetchData<VulgarityValue>("vulgarity");
 
 export const generalComparisons = createSlice({
 	name: "general",
 	initialState,
 	reducers: {},
 	extraReducers: (builder) =>
-		builder.addCase(fetchLeaderData.fulfilled, loadLeader),
+		builder
+			.addCase(fetchLeaderData.fulfilled, loadGeneral("count"))
+			.addCase(fetchVulgarityData.fulfilled, loadGeneral("vulgarity")),
 });

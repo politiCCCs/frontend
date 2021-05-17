@@ -12,7 +12,7 @@ export interface DataItem {
 }
 
 // Sentiment
-export const generalComparisonsSelector = (
+export const generalComparisonsCountSelector = (
 	dataKey: keyof TwitterCountData,
 	ignore?: Set<keyof GeneralComparisonsState>,
 ) => (store: Store): DataItem[] => {
@@ -33,7 +33,7 @@ export const generalComparisonsSelector = (
 
 			items.push({
 				name: GeneralComparisonsStateNameMap[key],
-				value: value[dataKey]?.sum,
+				value: value.count?.[dataKey]?.sum,
 			});
 		}
 	}
