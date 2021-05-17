@@ -1,5 +1,6 @@
 import { Store } from "state";
 import {
+	GeneralComparisonsItem,
 	GeneralComparisonsState,
 	GeneralComparisonsStateNameMap,
 } from "./generalComparisons";
@@ -34,6 +35,35 @@ export const generalComparisonsCountSelector = (
 			items.push({
 				name: GeneralComparisonsStateNameMap[key],
 				value: value.count?.[dataKey]?.sum,
+			});
+		}
+	}
+
+	return items;
+};
+
+export const generalComparisonsSelector = (
+	dataKey: Exclude<keyof GeneralComparisonsItem, "count">,
+	ignore?: Set<keyof GeneralComparisonsState>,
+) => (store: Store): DataItem[] => {
+	const items: DataItem[] = [];
+
+	let key: keyof GeneralComparisonsState;
+	for (key in store.general) {
+		if (ignore?.has(key)) {
+			continue;
+		}
+
+		if (Object.prototype.hasOwnProperty.call(store.general, key)) {
+			const value = store.general[key];
+
+			if (value === undefined) {
+				continue;
+			}
+
+			items.push({
+				name: GeneralComparisonsStateNameMap[key],
+				value: value[dataKey],
 			});
 		}
 	}

@@ -17,7 +17,7 @@ interface CouchDBData<K, V> {
 
 type LoadAction<K, V> = PayloadAction<CouchDBData<K, V>>;
 
-interface GeneralComparisonsItem {
+export interface GeneralComparisonsItem {
 	count?: TwitterCountData;
 	vulgarity?: number;
 	tweets?: number;
