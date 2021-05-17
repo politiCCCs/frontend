@@ -18,7 +18,8 @@ const numberWithCommas = (x: number | undefined): string => {
 		return "";
 	}
 
-	return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+	const rounded = x.toFixed(2);
+	return rounded.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 };
 
 export const CustomTooltip = (dataKey: string) => ({
@@ -41,8 +42,11 @@ export const CustomTooltip = (dataKey: string) => ({
 				<GenericTableRow header={dataKey}>
 					{numberWithCommas(data?.x)}
 				</GenericTableRow>
-				<GenericTableRow header="best fit">
+				<GenericTableRow header="Best Fit Y">
 					{numberWithCommas(data?.bestFitY)}
+				</GenericTableRow>
+				<GenericTableRow header="r^2">
+					{numberWithCommas(data?.r2)}
 				</GenericTableRow>
 			</GenericTable>
 		</div>

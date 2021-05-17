@@ -7,6 +7,7 @@ export interface ComparisonData {
 	x: number;
 	y: number;
 	bestFitY?: number;
+	r2?: number;
 }
 
 type ComparisonDataNoBestFit = Omit<ComparisonData, "bestFitY">;
@@ -26,11 +27,13 @@ const sortComparisonData = (a: Point, b: Point): number => {
 	return 0;
 };
 
-type LeastSquares = (x?: number) => number;
+interface Analysis {
+	bestFit: (x?: number) => number;
+	r2Acc: (y: number, predY: number) => number;
+	t2Acc: (y: number, meanY: number) => number;
+}
 
-const leastSquares = (
-	points: ComparisonDataNoBestFit[],
-): LeastSquares | undefined => {
+const analysis = (points: ComparisonDataNoBestFit[]): Analysis | undefined => {
 	if (points.length === 0) {
 		return;
 	}
@@ -51,11 +54,15 @@ const leastSquares = (
 	const m = (n * xySum - xSum * ySum) / (n * xSqSum - xSum * xSum);
 	const b = (ySum - m * xSum) / n;
 
-	return (x?: number): number => {
-		if (x === undefined) {
-			return 0;
-		}
-		return m * x + b;
+	return {
+		bestFit: (x?: number): number => {
+			if (x === undefined) {
+				return 0;
+			}
+			return m * x + b;
+		},
+		r2Acc: (y: number, predY: number) => Math.pow(y - predY, 2),
+		t2Acc: (y: number, meanY: number) => Math.pow(y - meanY, 2),
 	};
 };
 
@@ -95,11 +102,27 @@ export const createPoliticianSelector = (dataKey: keyof PoliticianData) => (
 
 	points.sort(sortComparisonData);
 
-	const bestFit = leastSquares(points);
-	if (bestFit) {
-		for (const point of points) {
-			(point as ComparisonData).bestFitY = bestFit(point.x);
-		}
+	const fns = analysis(points);
+	if (fns === undefined) {
+		return points;
 	}
+
+	const { bestFit, r2Acc, t2Acc } = fns;
+	let rss = 0;
+	let tss = 0;
+	const meanY = points.reduce((acc, curr) => acc + curr.y, 0) / points.length;
+
+	for (const point of points) {
+		const predY = bestFit(point.x);
+		(point as ComparisonData).bestFitY = predY;
+		rss += r2Acc(point.y, predY);
+		tss += t2Acc(point.y, meanY);
+	}
+
+	const r2 = 1 - rss / tss;
+	for (const point of points) {
+		(point as ComparisonData).r2 = r2;
+	}
+
 	return points;
 };
