@@ -5,28 +5,17 @@ import {
 	generalComparisonsCountSelector,
 	generalComparisonsSelector,
 } from "state/generalComparisonsSelectors";
-import { GeneralComparisonsState } from "state/generalComparisons";
 import styles from "./GeneralComparisons.module.css";
 
-const ignore = new Set<keyof GeneralComparisonsState>([
-	"nonPolitical",
-	"otherLeaderNonPoliticalContent",
-]);
 
 export const GeneralComparisonPage = (): JSX.Element => {
-	const sentiment = useSelector(
-		generalComparisonsCountSelector("sentiment", ignore),
-	);
+	const sentiment = useSelector(generalComparisonsCountSelector("sentiment"));
 
-	const likes = useSelector(generalComparisonsCountSelector("likes", ignore));
+	const likes = useSelector(generalComparisonsCountSelector("likes"));
 
-	const retweets = useSelector(
-		generalComparisonsCountSelector("retweets", ignore),
-	);
+	const retweets = useSelector(generalComparisonsCountSelector("retweets"));
 
-	const vulgarity = useSelector(
-		generalComparisonsSelector("vulgarity", ignore),
-	);
+	const vulgarity = useSelector(generalComparisonsSelector("vulgarity"));
 
 	return (
 		<div className={styles.wrapper}>
