@@ -1,29 +1,31 @@
 import { Bar } from "recharts";
 import { BarChartWrapper } from "components/BarChartWrapper";
 import { useSelector } from "react-redux";
-import { generalComparisonsCountSelector } from "state/generalComparisonsSelectors";
+import {
+	generalComparisonsCountSelector,
+	generalComparisonsSelector,
+} from "state/generalComparisonsSelectors";
+import { GeneralComparisonsState } from "state/generalComparisons";
 import styles from "./GeneralComparisons.module.css";
+
+const ignore = new Set<keyof GeneralComparisonsState>([
+	"nonPolitical",
+	"otherLeaderNonPoliticalContent",
+]);
 
 export const GeneralComparisonPage = (): JSX.Element => {
 	const sentiment = useSelector(
-		generalComparisonsCountSelector(
-			"sentiment",
-			new Set(["nonPolitical", "otherLeaderNonPoliticalContent"]),
-		),
+		generalComparisonsCountSelector("sentiment", ignore),
 	);
 
-	const likes = useSelector(
-		generalComparisonsCountSelector(
-			"likes",
-			new Set(["nonPolitical", "otherLeaderNonPoliticalContent"]),
-		),
-	);
+	const likes = useSelector(generalComparisonsCountSelector("likes", ignore));
 
 	const retweets = useSelector(
-		generalComparisonsCountSelector(
-			"retweets",
-			new Set(["nonPolitical", "otherLeaderNonPoliticalContent"]),
-		),
+		generalComparisonsCountSelector("retweets", ignore),
+	);
+
+	const vulgarity = useSelector(
+		generalComparisonsSelector("vulgarity", ignore),
 	);
 
 	return (
@@ -38,6 +40,10 @@ export const GeneralComparisonPage = (): JSX.Element => {
 
 			<BarChartWrapper name="Leaders Retweets (by Party)" data={retweets}>
 				<Bar dataKey="value" name="Retweets" fill="#8884d8" />
+			</BarChartWrapper>
+
+			<BarChartWrapper name="Leaders Vulgarity (by Party)" data={vulgarity}>
+				<Bar dataKey="value" name="Vulgarity" fill="#8884d8" />
 			</BarChartWrapper>
 		</div>
 	);
