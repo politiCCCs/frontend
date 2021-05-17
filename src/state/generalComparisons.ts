@@ -135,8 +135,10 @@ type LeaderValue = [Count, Count, Count];
 export const fetchLeaderData = fetchData<LeaderValue>("leaders");
 
 // Vulgarity
-type VulgarityValue = number;
-export const fetchVulgarityData = fetchData<VulgarityValue>("vulgarity");
+export const fetchVulgarityData = fetchData<number>("vulgarity");
+
+// Tweets
+export const fetchTweetsData = fetchData<number>("tweets");
 
 export const generalComparisons = createSlice({
 	name: "general",
@@ -145,5 +147,6 @@ export const generalComparisons = createSlice({
 	extraReducers: (builder) =>
 		builder
 			.addCase(fetchLeaderData.fulfilled, loadGeneral("count"))
-			.addCase(fetchVulgarityData.fulfilled, loadGeneral("vulgarity")),
+			.addCase(fetchVulgarityData.fulfilled, loadGeneral("vulgarity"))
+			.addCase(fetchTweetsData.fulfilled, loadGeneral("tweets")),
 });

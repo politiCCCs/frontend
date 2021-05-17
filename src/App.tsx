@@ -14,7 +14,11 @@ import {
 import { fetchCandidates, fetchNames } from "state/candidates";
 import { GeneralComparisonPage } from "pages/GeneralComparisons";
 import { CorrelationPage } from "pages/Correlation";
-import { fetchLeaderData, fetchVulgarityData } from "state/generalComparisons";
+import {
+	fetchLeaderData,
+	fetchTweetsData,
+	fetchVulgarityData,
+} from "state/generalComparisons";
 
 const useFetching = (): void => {
 	const dispatch = useDispatch();
@@ -30,6 +34,7 @@ const useFetching = (): void => {
 
 		dispatch(fetchLeaderData());
 		dispatch(fetchVulgarityData());
+		dispatch(fetchTweetsData());
 	}, [dispatch]);
 };
 
