@@ -25,12 +25,12 @@ export const BarChartWrapper = ({
 		<div className={styles.wrapper}>
 			<h3>{name}</h3>
 
-			<BarChart width={700} height={400} data={data}>
+			<BarChart width={1000} height={400} data={data} layout="vertical">
 				<CartesianGrid strokeDasharray="3 3" />
-				<XAxis dataKey="name" tick />
-				<YAxis />
+				<XAxis type="number" />
+				<YAxis dataKey="name" type="category" tick width={220} />
 				<Tooltip />
-				<Legend margin={{ top: 30 }} />
+				<Legend />
 				{children}
 			</BarChart>
 		</div>
