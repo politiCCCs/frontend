@@ -1,3 +1,5 @@
+import { PayloadAction } from "@reduxjs/toolkit";
+
 /**
  * Count type returned by CouchDB
  */
@@ -31,3 +33,16 @@ export const arrayReferenceEqual = <T>(a: T[], b: T[]): boolean => {
 
 export const capitalizeFirstLetter = (s: string): string =>
 	s.charAt(0).toUpperCase() + s.slice(1);
+
+// Types from CouchDB
+export interface CouchDBRow<K, V> {
+	key: K;
+	value: V;
+}
+
+export interface CouchDBData<K, V> {
+	rows: CouchDBRow<K, V>[];
+}
+
+// Redux helper to load from CouchDB
+export type LoadAction<K, V> = PayloadAction<CouchDBData<K, V>>;
