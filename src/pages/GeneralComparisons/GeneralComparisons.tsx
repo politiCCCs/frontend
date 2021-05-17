@@ -12,10 +12,21 @@ export const GeneralComparisonPage = (): JSX.Element => {
 		),
 	);
 
+	const likes = useSelector(
+		generalComparisonsSelector(
+			"likes",
+			new Set(["nonPolitical", "otherLeaderNonPoliticalContent"]),
+		),
+	);
+
 	return (
 		<div className={styles.wrapper}>
 			<BarChartWrapper name="Leaders Sentiment (by Party)" data={sentiment}>
 				<Bar dataKey="value" name="Sentiment" fill="#8884d8" />
+			</BarChartWrapper>
+
+			<BarChartWrapper name="Leaders Likes (by Party)" data={likes}>
+				<Bar dataKey="value" name="Likes" fill="#8884d8" />
 			</BarChartWrapper>
 		</div>
 	);
