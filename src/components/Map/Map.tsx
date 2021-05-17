@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import ReactMapGL, { Source, Layer, MapEvent, MapContext } from "react-map-gl";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Spinner } from "@blueprintjs/core";
 import type { FeatureIdentifier, Map as MapInstance } from "mapbox-gl";
@@ -9,17 +8,16 @@ import { ui as store } from "state/ui";
 import { electorateBorders, electorateFills } from "./layerStyles";
 import { Feature } from "./types";
 import { MapTooltip, MapTooltipProps } from "./MapTooltip";
+import { useShapeFile } from "./useShapeFile";
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN!;
-
-type GeoJSONType = Source["props"]["data"];
 
 export const Map = (): JSX.Element => {
 	const dispatch = useDispatch();
 	const { map }: { map: MapInstance } = useContext(MapContext);
 
 	const [error, setError] = useState("");
-	const [geoJSON, setGeoJSON] = useState<GeoJSONType | null>(null);
+	const geoJSON = useShapeFile(setError);
 
 	const [viewport, setViewport] = useState({
 		longitude: 144.9631,
@@ -73,19 +71,6 @@ export const Map = (): JSX.Element => {
 		setPriorSelectedFeature(selectedFeature);
 		dispatch(store.actions.setElectorate(selectedFeature.properties));
 	};
-
-	// Fetch the shapefile
-	useEffect(() => {
-		fetch("/shapefile")
-			.then((res) => res.json())
-			.then((data) => {
-				// @ts-ignore
-				setGeoJSON(data as GeoJSONType);
-			})
-			.catch(() => {
-				setError("Could not retrieve shape file");
-			});
-	}, []);
 
 	let content: JSX.Element;
 
