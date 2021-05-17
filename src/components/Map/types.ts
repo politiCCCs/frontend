@@ -1,3 +1,5 @@
+import type { Feature as GeoJsonFeature } from "geojson";
+
 export interface FeatureProperties {
 	Actual: number;
 	Area_SqKm: number;
@@ -10,6 +12,4 @@ export interface FeatureProperties {
 	Total_Popu: number;
 }
 
-export interface Feature {
-	properties: FeatureProperties;
-}
+export type Feature = GeoJsonFeature<null, FeatureProperties>;
