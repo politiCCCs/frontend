@@ -30,7 +30,7 @@ export const BarChartWrapper = ({
 				<XAxis dataKey="name" tick />
 				<YAxis />
 				<Tooltip />
-				<Legend />
+				<Legend margin={{ top: 30 }} />
 				{children}
 			</BarChart>
 		</div>
