@@ -44,7 +44,7 @@ const initialState: GeneralComparisonsState = {};
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const fetchData = <K, V>(dataKey: string) =>
 	createAsyncThunk(`general/fetch/${dataKey}`, async () => {
-		const url = `/global/${dataKey}`;
+		const url = `/general/${dataKey}`;
 		const response = await fetch(url);
 		const { data } = await response.json();
 		return data as CouchDBData<K, V>;
