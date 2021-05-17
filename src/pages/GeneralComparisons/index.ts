@@ -1,0 +1,1 @@
+export { GeneralComparisonPage } from "./GeneralComparisons";

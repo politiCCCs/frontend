@@ -1,14 +1,14 @@
 import { useSelector } from "react-redux";
 
 import { ScatterPlot } from "components/ScatterPlot/ScatterPlot";
-import { createSelector } from "state/selectors";
+import { createPoliticianSelector } from "state/politicianSelectors";
 import styles from "./Correlation.module.css";
 
 export const CorrelationPage = (): JSX.Element => {
-	const sentimentVsVotes = useSelector(createSelector("sentiment"));
-	const tweetsVsVotes = useSelector(createSelector("count"));
-	const retweetsVsVotes = useSelector(createSelector("retweets"));
-	const likesVsVotes = useSelector(createSelector("likes"));
+	const sentimentVsVotes = useSelector(createPoliticianSelector("sentiment"));
+	const tweetsVsVotes = useSelector(createPoliticianSelector("count"));
+	const retweetsVsVotes = useSelector(createPoliticianSelector("retweets"));
+	const likesVsVotes = useSelector(createPoliticianSelector("likes"));
 
 	return (
 		<div className={styles.correlation}>

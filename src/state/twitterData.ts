@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Count, TwitterCountData } from "./utils";
 
 // Redux action helpers
 interface CouchDBRow<T> {
@@ -13,19 +14,7 @@ interface CouchDBData<T> {
 
 type LoadAction<T> = PayloadAction<CouchDBData<T>>;
 
-// Slice state
-interface Count {
-	sum: number;
-	count: number;
-	min: number;
-	max: number;
-	sumsqr: number;
-}
-
-export interface PoliticianData {
-	likes?: Count;
-	retweets?: Count;
-	sentiment?: Count;
+export interface PoliticianData extends TwitterCountData {
 	count?: number;
 }
 
@@ -46,7 +35,10 @@ const loadPoliticianPayload = <K extends keyof PoliticianData>(dataKey: K) => (
 ): void => {
 	for (const { key, value } of rows) {
 		const userId = key[0];
-		state.data[userId] = { ...state.data[userId], [dataKey]: value };
+		state.data[userId] = {
+			...state.data[userId],
+			[dataKey]: typeof value === "object" ? { ...value } : value,
+		};
 	}
 };
 
@@ -54,7 +46,7 @@ const loadPoliticianPayload = <K extends keyof PoliticianData>(dataKey: K) => (
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const fetchData = (dataKey: keyof PoliticianData) =>
 	createAsyncThunk(`data/fetch/${dataKey}`, async () => {
-		const url = `/${dataKey}-per-politician`;
+		const url = `/politicians/${dataKey}`;
 		const response = await fetch(url);
 		const { data } = await response.json();
 		return data as CouchDBData<Count>;

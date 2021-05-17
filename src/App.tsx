@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { ElectoratePage } from "pages/Electorate";
-import { CorrelationPage } from "pages/Correlation";
 import { Home } from "pages/Home";
 import { Header } from "components/Header";
 import {
@@ -13,6 +12,9 @@ import {
 	fetchCount,
 } from "state/twitterData";
 import { fetchCandidates, fetchNames } from "state/candidates";
+import { GeneralComparisonPage } from "pages/GeneralComparisons";
+import { CorrelationPage } from "pages/Correlation";
+import { fetchLeaderData, fetchVulgarityData } from "state/generalComparisons";
 
 const useFetching = (): void => {
 	const dispatch = useDispatch();
@@ -25,6 +27,9 @@ const useFetching = (): void => {
 
 		dispatch(fetchNames());
 		dispatch(fetchCandidates());
+
+		dispatch(fetchLeaderData());
+		dispatch(fetchVulgarityData());
 	}, [dispatch]);
 };
 
@@ -44,6 +49,9 @@ export const App = (): JSX.Element => {
 				</Route>
 				<Route exact path="/correlations">
 					<CorrelationPage />
+				</Route>
+				<Route exact path="/general">
+					<GeneralComparisonPage />
 				</Route>
 			</Switch>
 		</Router>
