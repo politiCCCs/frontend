@@ -19,6 +19,13 @@ export const GeneralComparisonPage = (): JSX.Element => {
 		),
 	);
 
+	const retweets = useSelector(
+		generalComparisonsSelector(
+			"retweets",
+			new Set(["nonPolitical", "otherLeaderNonPoliticalContent"]),
+		),
+	);
+
 	return (
 		<div className={styles.wrapper}>
 			<BarChartWrapper name="Leaders Sentiment (by Party)" data={sentiment}>
@@ -27,6 +34,10 @@ export const GeneralComparisonPage = (): JSX.Element => {
 
 			<BarChartWrapper name="Leaders Likes (by Party)" data={likes}>
 				<Bar dataKey="value" name="Likes" fill="#8884d8" />
+			</BarChartWrapper>
+
+			<BarChartWrapper name="Leaders Retweets (by Party)" data={retweets}>
+				<Bar dataKey="value" name="Retweets" fill="#8884d8" />
 			</BarChartWrapper>
 		</div>
 	);
