@@ -53,21 +53,25 @@ export const Map = (): JSX.Element => {
 	const onClick = ({ features }: MapEvent): void => {
 		const selectedFeature: Feature = features && features[0];
 
-		if (selectedFeature.properties.Elect_div !== undefined) {
-			if (priorSelectedFeature) {
-				// it's easier to use our own type, as FeatureIdentifier is not generic
-				map.setFeatureState(
-					(priorSelectedFeature as unknown) as FeatureIdentifier,
-					{ clicked: false },
-				);
-			}
-
-			map.setFeatureState((selectedFeature as unknown) as FeatureIdentifier, {
-				clicked: true,
-			});
-			setPriorSelectedFeature(selectedFeature);
-			dispatch(store.actions.setElectorate(selectedFeature.properties));
+		if (
+			selectedFeature === undefined ||
+			selectedFeature.properties.Elect_div === undefined
+		) {
+			return;
 		}
+		if (priorSelectedFeature) {
+			// it's easier to use our own type, as FeatureIdentifier is not generic
+			map.setFeatureState(
+				(priorSelectedFeature as unknown) as FeatureIdentifier,
+				{ clicked: false },
+			);
+		}
+
+		map.setFeatureState((selectedFeature as unknown) as FeatureIdentifier, {
+			clicked: true,
+		});
+		setPriorSelectedFeature(selectedFeature);
+		dispatch(store.actions.setElectorate(selectedFeature.properties));
 	};
 
 	// Fetch the shapefile
