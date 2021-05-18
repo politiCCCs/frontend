@@ -1,11 +1,12 @@
 import { AnchorButton, Classes, Navbar } from "@blueprintjs/core";
-import { useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import { useCallback, useMemo } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
 import styles from "./Header.module.css";
 
 export const Header = (): JSX.Element => {
 	const location = useLocation();
+	const history = useHistory();
 
 	const currentLocation = useMemo(() => {
 		const parts = location.pathname.split("/");
@@ -19,12 +20,18 @@ export const Header = (): JSX.Element => {
 		}
 	}, [location.pathname]);
 
+	const onClick = useCallback(() => {
+		history.push("/");
+	}, [history]);
+
 	return (
 		<Navbar>
 			<Navbar.Group>
-				<Navbar.Heading className={styles.headerText}>
-					politicccs
-				</Navbar.Heading>
+				<AnchorButton href="/" className={Classes.MINIMAL}>
+						<Navbar.Heading className={styles.headerText} onClick={onClick}>
+							politicccs
+						</Navbar.Heading>
+				</AnchorButton>
 				<Navbar.Divider />
 				<Navbar.Heading>{currentLocation}</Navbar.Heading>
 			</Navbar.Group>
