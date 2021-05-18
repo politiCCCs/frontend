@@ -43,7 +43,9 @@ export const CandidateTable = ({ candidates }: CandidateProps): JSX.Element => {
 
 	const rowRenderer = (rowIndex: number): JSX.Element => {
 		return (
-			<RowHeaderCell key={`${rowIndex}`}>
+			<RowHeaderCell
+				nameRenderer={(_name, index) => <p>{candidates[index!]?.name}</p>}
+			>
 				{candidates[rowIndex]?.name}
 			</RowHeaderCell>
 		);
