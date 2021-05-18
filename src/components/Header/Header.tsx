@@ -1,4 +1,4 @@
-import { AnchorButton, Navbar } from "@blueprintjs/core";
+import { AnchorButton, Classes, Navbar } from "@blueprintjs/core";
 import { useMemo } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -31,13 +31,25 @@ export const Header = (): JSX.Element => {
 
 			<Navbar.Group align="right">
 				<Navbar.Divider />
-				<AnchorButton href="/electorates" icon="globe">
+				<AnchorButton
+					href="/electorates"
+					icon="globe"
+					className={Classes.MINIMAL}
+				>
 					Electorates
 				</AnchorButton>
-				<AnchorButton href="/correlations" icon="regression-chart">
+				<AnchorButton
+					href="/correlations"
+					icon="regression-chart"
+					className={Classes.MINIMAL}
+				>
 					Correlations
 				</AnchorButton>
-				<AnchorButton href="/general" icon="timeline-bar-chart">
+				<AnchorButton
+					href="/general"
+					icon="timeline-bar-chart"
+					className={Classes.MINIMAL}
+				>
 					General Comparisons
 				</AnchorButton>
 			</Navbar.Group>
