@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@blueprintjs/core": "^3.44.2",
-    "@blueprintjs/icons": "^3.26.0",
-    "@blueprintjs/table": "^3.8.31",
+    "@blueprintjs/core": "^4.0.0-alpha.0",
+    "@blueprintjs/icons": "^4.0.0-alpha.0",
+    "@blueprintjs/table": "^4.0.0-alpha.0",
     "@danmarshall/deckgl-typings": "^4.9.2",
     "@deck.gl/react": "^8.4.16",
     "@fast-csv/parse": "^4.3.6",

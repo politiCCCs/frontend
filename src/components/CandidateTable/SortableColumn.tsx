@@ -1,5 +1,5 @@
 import { Menu, MenuItem } from "@blueprintjs/core";
-import { Column, ColumnHeaderCell, ICellRenderer } from "@blueprintjs/table";
+import { Column, ColumnHeaderCell, CellRenderer } from "@blueprintjs/table";
 
 interface Comparable {
 	toString: () => string;
@@ -47,7 +47,7 @@ const SortableColumnMenu = (
 export interface SortableColumnProps {
 	name: string;
 	index: number;
-	cellRenderer: ICellRenderer;
+	cellRenderer: CellRenderer;
 	sortColumnCallback: SortColumnCallback;
 }
 
