@@ -50,7 +50,7 @@ export const Map = (): JSX.Element => {
 			<ReactMapGL
 				{...viewport}
 				width="100vw"
-				height="calc(100vh - 50px - 448px)"
+				height="calc(100vh - 50px - 400px)"
 				onViewportChange={setViewport}
 				mapboxApiAccessToken={MAPBOX_TOKEN}
 				onHover={onHover}

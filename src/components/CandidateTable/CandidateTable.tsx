@@ -126,7 +126,13 @@ export const CandidateTable = ({ candidates }: CandidateProps): JSX.Element => {
 
 	return (
 		<div className={styles.wrapper}>
-			<Table numRows={candidates.length} rowHeaderCellRenderer={rowRenderer}>
+			<Table
+				numRows={candidates.length}
+				rowHeaderCellRenderer={rowRenderer}
+				enableRowResizing={false}
+				enableColumnResizing={false}
+				className={styles.table}
+			>
 				{tableContents}
 			</Table>
 		</div>
