@@ -21,7 +21,9 @@ export const useSelectedFeature = (): OnClick => {
 
 		if (
 			selectedFeature === null ||
+			selectedFeature === undefined ||
 			selectedFeature.properties === null ||
+			selectedFeature.properties === undefined ||
 			selectedFeature.properties.Elect_div === undefined
 		) {
 			return;
