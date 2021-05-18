@@ -7,7 +7,7 @@ export const useShapeFile = (setError: SetError): FeatureCollection | null => {
 	const [geoJSON, setGeoJSON] = useState<FeatureCollection | null>(null);
 
 	useEffect(() => {
-		fetch("/shapefile")
+		fetch("/api/load/shapefile")
 			.then((res) => res.json())
 			.then((data) => {
 				setGeoJSON(data);

@@ -60,7 +60,7 @@ const initialState: CandidatesState = {
 export const fetchNames = createAsyncThunk(
 	"candidates/fetchNames",
 	async () => {
-		const url = `/handle-name-map`;
+		const url = `/api/handle-name-map`;
 		const response = await fetch(url);
 		return response.json();
 	},
@@ -106,7 +106,7 @@ const parser = (csvStr: string): Promise<CandidateRow[]> =>
 export const fetchCandidates = createAsyncThunk(
 	"candidates/fetchCandidates",
 	async () => {
-		const url = `/votes-by-candidate.csv`;
+		const url = `/api/load/votes-by-candidate.csv`;
 		const response = await fetch(url);
 		const data = await response.text();
 		const rows = await parser(data);

@@ -51,7 +51,7 @@ type GeneralKey = [boolean, boolean, boolean, boolean, boolean];
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const fetchData = <V>(dataKey: string) =>
 	createAsyncThunk(`general/fetch/${dataKey}`, async () => {
-		const url = `/general/${dataKey}`;
+		const url = `/api/general/${dataKey}`;
 		const response = await fetch(url);
 		const { data } = await response.json();
 		return data as CouchDBData<GeneralKey, V>;
