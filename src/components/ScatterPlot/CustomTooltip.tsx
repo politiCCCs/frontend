@@ -1,4 +1,4 @@
-import { GenericTable, GenericTableRow } from "components/GenericTable";
+import { MapTable, MapTableRow } from "components/MapTable";
 import { ComparisonData } from "state/politicianSelectors";
 import styles from "./CustomTooltip.module.css";
 
@@ -33,22 +33,22 @@ export const CustomTooltip = (dataKey: string) => ({
 	const data = payload?.[0]?.payload;
 	return (
 		<div className={styles.customTooltip}>
-			<GenericTable>
-				<GenericTableRow header="Name">{data?.name}</GenericTableRow>
-				<GenericTableRow header="Handle">@{data?.handle}</GenericTableRow>
-				<GenericTableRow header="Votes">
+			<MapTable>
+				<MapTableRow header="Name">{data?.name}</MapTableRow>
+				<MapTableRow header="Handle">@{data?.handle}</MapTableRow>
+				<MapTableRow header="Votes">
 					{numberWithCommas(data?.y)}
-				</GenericTableRow>
-				<GenericTableRow header={dataKey}>
+				</MapTableRow>
+				<MapTableRow header={dataKey}>
 					{numberWithCommas(data?.x)}
-				</GenericTableRow>
-				<GenericTableRow header="Best Fit Y">
+				</MapTableRow>
+				<MapTableRow header="Best Fit Y">
 					{numberWithCommas(data?.bestFitY)}
-				</GenericTableRow>
-				<GenericTableRow header="r^2">
+				</MapTableRow>
+				<MapTableRow header="r^2">
 					{numberWithCommas(data?.r2)}
-				</GenericTableRow>
-			</GenericTable>
+				</MapTableRow>
+			</MapTable>
 		</div>
 	);
 };

@@ -1,16 +1,16 @@
-import styles from "./GenericTableRow.module.css";
+import styles from "./MapTableRow.module.css";
 
 type Child = string | number | JSX.Element | undefined;
 
-export interface GenericTableRowProps {
+export interface MapTableRowProps {
 	header: string | JSX.Element;
 	children: Child | Child[];
 }
 
-export const GenericTableRow = ({
+export const MapTableRow = ({
 	header,
 	children,
-}: GenericTableRowProps): JSX.Element => {
+}: MapTableRowProps): JSX.Element => {
 	return (
 		<div className={styles.row}>
 			<div className={styles.header}>{header}</div>

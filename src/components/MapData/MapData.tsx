@@ -1,5 +1,5 @@
 import { CandidateTable } from "components/CandidateTable";
-import { GenericTable, GenericTableRow } from "components/GenericTable";
+import { MapTable, MapTableRow } from "components/MapTable";
 import { useSelector } from "react-redux";
 import { Store } from "state";
 import styles from "./MapData.module.css";
@@ -29,20 +29,20 @@ export const MapData = (): JSX.Element => {
 
 	return data ? (
 		<div className={styles.wrapper}>
-			<GenericTable>
-				<GenericTableRow header="Electorate">
+			<MapTable>
+				<MapTableRow header="Electorate">
 					{data?.electorate.Elect_div}
-				</GenericTableRow>
+				</MapTableRow>
 
-				<GenericTableRow header="State">
+				<MapTableRow header="State">
 					{data?.electorate.State}
-				</GenericTableRow>
-				<GenericTableRow header="Area">
+				</MapTableRow>
+				<MapTableRow header="Area">
 					<p>
 						{data?.electorate.Area_SqKm.toFixed(2)} km<sup>2</sup>
 					</p>
-				</GenericTableRow>
-			</GenericTable>
+				</MapTableRow>
+			</MapTable>
 
 			{data.candidates !== undefined ? (
 				<CandidateTable candidates={data.candidates} />
