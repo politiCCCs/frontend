@@ -16,13 +16,13 @@ export interface DataItem {
 export const generalComparisonsCountSelector = (
 	dataKey: keyof TwitterCountData,
 	getAverage: boolean = false,
-	ignore?: Set<keyof GeneralComparisonsState>,
+	pick?: Set<keyof GeneralComparisonsState>,
 ) => (store: Store): DataItem[] => {
 	const items: DataItem[] = [];
 
 	let key: keyof GeneralComparisonsState;
 	for (key in store.general) {
-		if (ignore?.has(key)) {
+		if (pick !== undefined && !pick.has(key)) {
 			continue;
 		}
 
@@ -52,13 +52,13 @@ export const generalComparisonsCountSelector = (
 export const generalComparisonsSelector = (
 	dataKey: Exclude<keyof GeneralComparisonsItem, "count">,
 	getAverage: boolean = false,
-	ignore?: Set<keyof GeneralComparisonsState>,
+	pick?: Set<keyof GeneralComparisonsState>,
 ) => (store: Store): DataItem[] => {
 	const items: DataItem[] = [];
 
 	let key: keyof GeneralComparisonsState;
 	for (key in store.general) {
-		if (ignore?.has(key)) {
+		if (pick !== undefined && !pick.has(key)) {
 			continue;
 		}
 

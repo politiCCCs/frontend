@@ -17,13 +17,13 @@ export interface TwitterCountData {
 	sentiment?: Count;
 }
 
-export const arrayReferenceEqual = <T>(a: T[], b: T[]): boolean => {
+export const arrayValueEqual = <T>(a: T[], b: T[]): boolean => {
 	if (a.length !== b.length) {
 		return false;
 	}
 
 	for (let i = 0; i < a.length; i += 1) {
-		if (a[i] !== b[i]) {
+		if (a[i] !== undefined && b[i] !== undefined && a[i] !== b[i]) {
 			return false;
 		}
 	}

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
-	arrayReferenceEqual as arrayValueEqual,
+	arrayValueEqual,
 	CouchDBData,
 	Count,
 	LoadAction,
@@ -14,12 +14,11 @@ export interface GeneralComparisonsItem {
 }
 
 export interface GeneralComparisonsState {
-	nonPolitical: GeneralComparisonsItem;
 	laborLeader: GeneralComparisonsItem;
 	liberalsLeader: GeneralComparisonsItem;
 	greensLeader: GeneralComparisonsItem;
-	otherLeaderPoliticalContent: GeneralComparisonsItem;
-	otherLeaderNonPoliticalContent: GeneralComparisonsItem;
+	nonPoliticalTweets: GeneralComparisonsItem;
+	politicalTweets: GeneralComparisonsItem;
 }
 
 export const GeneralComparisonsStateNameMap: Record<
@@ -29,18 +28,16 @@ export const GeneralComparisonsStateNameMap: Record<
 	greensLeader: "Greens Leader",
 	laborLeader: "Labor Leader",
 	liberalsLeader: "Liberals Leader",
-	nonPolitical: "Non-political",
-	otherLeaderNonPoliticalContent: "Small-Party Leaders (Non-political)",
-	otherLeaderPoliticalContent: "Small-Party Leaders (Political)",
+	nonPoliticalTweets: "Non-political",
+	politicalTweets: "Political",
 };
 
 const initialState: GeneralComparisonsState = {
-	nonPolitical: {},
 	laborLeader: {},
 	liberalsLeader: {},
 	greensLeader: {},
-	otherLeaderPoliticalContent: {},
-	otherLeaderNonPoliticalContent: {},
+	nonPoliticalTweets: {},
+	politicalTweets: {},
 };
 
 // General data
@@ -78,42 +75,43 @@ const loadGeneral = <ReturnedData>(dataKey: keyof GeneralComparisonsItem) => (
 			data = value;
 		}
 
-		// completely non political
-		if (arrayValueEqual(key, [false, false, false, false, false])) {
-			state.nonPolitical = {
-				...state.nonPolitical,
+		// Labor leader
+		if (arrayValueEqual(key, [true, undefined, true, undefined, undefined])) {
+			state.laborLeader = {
+				...state.laborLeader,
 				[dataKey]: data,
 			};
-		} else if (arrayValueEqual(key, [true, false, false, false, false])) {
-			// Leaders tweeting out non-political things when they're not part of
-			// labor, liberals, or greens
-			state.otherLeaderNonPoliticalContent = {
-				...state.otherLeaderNonPoliticalContent,
-				[dataKey]: data,
-			};
-		} else if (arrayValueEqual(key, [true, true, false, false, false])) {
-			// Leaders tweeting out political things when they're not part of labor,
-			// liberals, or greens
-			state.otherLeaderPoliticalContent = {
-				...state.otherLeaderPoliticalContent,
-				[dataKey]: data,
-			};
-		} else if (arrayValueEqual(key, [true, true, false, false, true])) {
-			// Greens leader tweeting political things
-			state.greensLeader = {
-				...state.greensLeader,
-				[dataKey]: data,
-			};
-		} else if (arrayValueEqual(key, [true, true, false, true, false])) {
-			// Liberals leader tweeting political things
+		}
+
+		// Liberal leader
+		if (arrayValueEqual(key, [true, undefined, undefined, true, undefined])) {
 			state.liberalsLeader = {
 				...state.liberalsLeader,
 				[dataKey]: data,
 			};
-		} else if (arrayValueEqual(key, [true, true, true, false, false])) {
-			// Labor leader tweeting political things
-			state.laborLeader = {
-				...state.laborLeader,
+		}
+
+		// Greens leader
+		if (arrayValueEqual(key, [true, undefined, undefined, undefined, true])) {
+			state.greensLeader = {
+				...state.greensLeader,
+				[dataKey]: data,
+			};
+		}
+
+		// Political tweets
+		if (
+			arrayValueEqual(key, [undefined, true, undefined, undefined, undefined])
+		) {
+			state.politicalTweets = { ...state.politicalTweets, [dataKey]: data };
+		}
+
+		// Non-political tweets
+		if (
+			arrayValueEqual(key, [undefined, false, undefined, undefined, undefined])
+		) {
+			state.nonPoliticalTweets = {
+				...state.nonPoliticalTweets,
 				[dataKey]: data,
 			};
 		}

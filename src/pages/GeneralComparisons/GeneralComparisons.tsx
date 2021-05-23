@@ -1,73 +1,100 @@
-import { Bar } from "recharts";
-import { BarChartWrapper } from "components/BarChartWrapper";
 import { useSelector } from "react-redux";
 import {
-	generalComparisonsCountSelector,
-	generalComparisonsSelector,
+	generalComparisonsCountSelector as countSelector,
+	generalComparisonsSelector as valueSelector,
 } from "state/generalComparisonsSelectors";
+import { GeneralComparisonsState } from "state/generalComparisons";
+import { ComparisonPlots } from "components/ComparisonPlots";
 import styles from "./GeneralComparisons.module.css";
 
+const party = new Set<keyof GeneralComparisonsState>([
+	"greensLeader",
+	"laborLeader",
+	"liberalsLeader",
+]);
+
+const political = new Set<keyof GeneralComparisonsState>([
+	"politicalTweets",
+	"nonPoliticalTweets",
+]);
+
 export const GeneralComparisonPage = (): JSX.Element => {
-	const sentiment = useSelector(generalComparisonsCountSelector("sentiment"));
-	const sentimentMean = useSelector(
-		generalComparisonsCountSelector("sentiment", true),
+	// Sentiment
+	const sentimentParty = useSelector(countSelector("sentiment", false, party));
+	const sentimentPartyMean = useSelector(
+		countSelector("sentiment", true, party),
 	);
 
-	const likes = useSelector(generalComparisonsCountSelector("likes"));
-	const likesMean = useSelector(generalComparisonsCountSelector("likes", true));
-
-	const retweets = useSelector(generalComparisonsCountSelector("retweets"));
-	const retweetsMean = useSelector(
-		generalComparisonsCountSelector("retweets", true),
+	const sentimentPolitical = useSelector(
+		countSelector("sentiment", false, political),
+	);
+	const sentimentPoliticalMean = useSelector(
+		countSelector("sentiment", true, political),
 	);
 
-	const vulgarity = useSelector(generalComparisonsSelector("vulgarity"));
-	const vulgarityMean = useSelector(
-		generalComparisonsSelector("vulgarity", true),
+	// Likes
+	const likesParty = useSelector(countSelector("likes", false, party));
+	const likesPartyMean = useSelector(countSelector("likes", true, party));
+
+	const likesPolitical = useSelector(countSelector("likes", false, political));
+	const likesPoliticalMean = useSelector(
+		countSelector("likes", true, political),
+	);
+
+	// Retweets
+	const retweetsParty = useSelector(countSelector("retweets", false, party));
+	const retweetsPartyMean = useSelector(countSelector("retweets", true, party));
+
+	const retweetsPolitical = useSelector(
+		countSelector("retweets", false, political),
+	);
+	const retweetsPoliticalMean = useSelector(
+		countSelector("retweets", true, political),
+	);
+
+	// Vulgarity
+	const vulgarityParty = useSelector(valueSelector("vulgarity", false, party));
+	const vulgarityPartyMean = useSelector(
+		valueSelector("vulgarity", true, party),
+	);
+
+	const vulgarityPolitical = useSelector(
+		valueSelector("vulgarity", false, political),
+	);
+	const vulgarityPoliticalMean = useSelector(
+		valueSelector("vulgarity", true, political),
 	);
 
 	return (
 		<div className={styles.wrapper}>
-			<BarChartWrapper name="Sentiment (by tweet group)" data={sentiment}>
-				<Bar dataKey="value" name="Sentiment" fill="#8884d8" />
-			</BarChartWrapper>
-
-			<BarChartWrapper
-				name="Sentiment - Mean (by tweet group)"
-				data={sentimentMean}
-			>
-				<Bar dataKey="value" name="Sentiment - Mean (by tweet group)" fill="#8884d8" />
-			</BarChartWrapper>
-
-			<BarChartWrapper name="Likes (by tweet group)" data={likes}>
-				<Bar dataKey="value" name="Likes" fill="#8884d8" />
-			</BarChartWrapper>
-
-			<BarChartWrapper name="Likes - Mean (by tweet group)" data={likesMean}>
-				<Bar dataKey="value" name="Likes (Mean)" fill="#8884d8" />
-			</BarChartWrapper>
-
-			<BarChartWrapper name="Retweets (by tweet group)" data={retweets}>
-				<Bar dataKey="value" name="Retweets" fill="#8884d8" />
-			</BarChartWrapper>
-
-			<BarChartWrapper
-				name="Retweets - Mean (by tweet group)"
-				data={retweetsMean}
-			>
-				<Bar dataKey="value" name="Retweets (Mean)" fill="#8884d8" />
-			</BarChartWrapper>
-
-			<BarChartWrapper name="Vulgarity (by tweet group)" data={vulgarity}>
-				<Bar dataKey="value" name="Vulgarity" fill="#8884d8" />
-			</BarChartWrapper>
-
-			<BarChartWrapper
-				name="Vulgarity - Mean (by tweet group)"
-				data={vulgarityMean}
-			>
-				<Bar dataKey="value" name="Vulgarity (Mean)" fill="#8884d8" />
-			</BarChartWrapper>
+			<ComparisonPlots
+				name="Sentiment"
+				party={sentimentParty}
+				partyMean={sentimentPartyMean}
+				political={sentimentPolitical}
+				politicalMean={sentimentPoliticalMean}
+			/>
+			<ComparisonPlots
+				name="Likes"
+				party={likesParty}
+				partyMean={likesPartyMean}
+				political={likesPolitical}
+				politicalMean={likesPoliticalMean}
+			/>
+			<ComparisonPlots
+				name="Retweets"
+				party={retweetsParty}
+				partyMean={retweetsPartyMean}
+				political={retweetsPolitical}
+				politicalMean={retweetsPoliticalMean}
+			/>
+			<ComparisonPlots
+				name="Vulgarity"
+				party={vulgarityParty}
+				partyMean={vulgarityPartyMean}
+				political={vulgarityPolitical}
+				politicalMean={vulgarityPoliticalMean}
+			/>
 		</div>
 	);
 };
