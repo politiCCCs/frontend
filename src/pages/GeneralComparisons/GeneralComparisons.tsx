@@ -28,42 +28,42 @@ export const GeneralComparisonPage = (): JSX.Element => {
 
 	return (
 		<div className={styles.wrapper}>
-			<BarChartWrapper name="Leaders Sentiment (by Party)" data={sentiment}>
+			<BarChartWrapper name="Sentiment (by tweet group)" data={sentiment}>
 				<Bar dataKey="value" name="Sentiment" fill="#8884d8" />
 			</BarChartWrapper>
 
 			<BarChartWrapper
-				name="Leaders Sentiment - Mean (by Party)"
+				name="Sentiment - Mean (by tweet group)"
 				data={sentimentMean}
 			>
-				<Bar dataKey="value" name="Sentiment - Mean (by Part)" fill="#8884d8" />
+				<Bar dataKey="value" name="Sentiment - Mean (by tweet group)" fill="#8884d8" />
 			</BarChartWrapper>
 
-			<BarChartWrapper name="Leaders Likes (by Party)" data={likes}>
+			<BarChartWrapper name="Likes (by tweet group)" data={likes}>
 				<Bar dataKey="value" name="Likes" fill="#8884d8" />
 			</BarChartWrapper>
 
-			<BarChartWrapper name="Leaders Likes - Mean (by Party)" data={likesMean}>
+			<BarChartWrapper name="Likes - Mean (by tweet group)" data={likesMean}>
 				<Bar dataKey="value" name="Likes (Mean)" fill="#8884d8" />
 			</BarChartWrapper>
 
-			<BarChartWrapper name="Leaders Retweets (by Party)" data={retweets}>
+			<BarChartWrapper name="Retweets (by tweet group)" data={retweets}>
 				<Bar dataKey="value" name="Retweets" fill="#8884d8" />
 			</BarChartWrapper>
 
 			<BarChartWrapper
-				name="Leaders Retweets - Mean (by Party)"
+				name="Retweets - Mean (by tweet group)"
 				data={retweetsMean}
 			>
 				<Bar dataKey="value" name="Retweets (Mean)" fill="#8884d8" />
 			</BarChartWrapper>
 
-			<BarChartWrapper name="Leaders Vulgarity (by Party)" data={vulgarity}>
+			<BarChartWrapper name="Vulgarity (by tweet group)" data={vulgarity}>
 				<Bar dataKey="value" name="Vulgarity" fill="#8884d8" />
 			</BarChartWrapper>
 
 			<BarChartWrapper
-				name="Leaders Vulgarity - Mean (by Party)"
+				name="Vulgarity - Mean (by tweet group)"
 				data={vulgarityMean}
 			>
 				<Bar dataKey="value" name="Vulgarity (Mean)" fill="#8884d8" />
