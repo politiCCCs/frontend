@@ -56,8 +56,14 @@ const fetchData = <V>(dataKey: string) =>
 
 const loadGeneral = <ReturnedData>(dataKey: keyof GeneralComparisonsItem) => (
 	state: GeneralComparisonsState,
-	{ payload: { rows } }: LoadAction<GeneralKey, ReturnedData>,
+	{ payload }: LoadAction<GeneralKey, ReturnedData>,
 ): void => {
+	if (payload === undefined) {
+		// bad request
+		return
+	}
+
+	const {rows} = payload
 	for (const { key, value } of rows) {
 		let data: TwitterCountData | number;
 

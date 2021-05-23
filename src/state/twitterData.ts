@@ -18,8 +18,14 @@ const initialState: DataState = { data: {} };
 // Load action payload into state
 const loadPoliticianPayload = <K extends keyof PoliticianData>(dataKey: K) => (
 	state: DataState,
-	{ payload: { rows } }: LoadAction<[string], Count>,
+	{ payload }: LoadAction<[string], Count>,
 ): void => {
+	if (payload === undefined) {
+		// bad request
+		return;
+	}
+
+	const { rows } = payload;
 	for (const { key, value } of rows) {
 		const userId = key[0];
 		state.data[userId] = {
