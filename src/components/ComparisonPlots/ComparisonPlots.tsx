@@ -20,12 +20,12 @@ export const ComparisonPlots = ({
 }: ComparisonPlotsProps): JSX.Element => {
 	return (
 		<>
-			<BarChartWrapper name={`${name} - Leaders (by party)`} data={party}>
+			<BarChartWrapper name={`${name} - Candidate (by party)`} data={party}>
 				<Bar dataKey="value" name={name} fill="#8884d8" />
 			</BarChartWrapper>
 
 			<BarChartWrapper
-				name={`${name} ${meanTitle} - Leaders (by party)`}
+				name={`${name} ${meanTitle} - Candidate (by party)`}
 				data={partyMean}
 			>
 				<Bar dataKey="value" name={name} fill="#8884d8" />

@@ -31,7 +31,7 @@ export const BarChartWrapper = ({
 			<BarChart width={1000} height={400} data={data} layout="vertical">
 				<CartesianGrid strokeDasharray="3 3" />
 				<XAxis type="number" scale={scale} domain={[0.01, "auto"]} />
-				<YAxis dataKey="name" type="category" tick width={100} />
+				<YAxis dataKey="name" type="category" tick width={150} />
 				<Tooltip />
 				<Legend
 					formatter={(value) => (

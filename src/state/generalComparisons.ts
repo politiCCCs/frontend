@@ -25,9 +25,9 @@ export const GeneralComparisonsStateNameMap: Record<
 	keyof GeneralComparisonsState,
 	string
 > = {
-	greensLeader: "Greens Leader",
-	laborLeader: "Labor Leader",
-	liberalsLeader: "Liberals Leader",
+	greensLeader: "Greens Candidate",
+	laborLeader: "Labor Candidate",
+	liberalsLeader: "Liberals Candidate",
 	nonPoliticalTweets: "Non-political",
 	politicalTweets: "Political",
 };
