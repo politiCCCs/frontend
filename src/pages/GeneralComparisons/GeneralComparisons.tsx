@@ -94,6 +94,7 @@ export const GeneralComparisonPage = (): JSX.Element => {
 				partyMean={vulgarityPartyMean}
 				political={vulgarityPolitical}
 				politicalMean={vulgarityPoliticalMean}
+				meanTitle="Proportion"
 			/>
 		</div>
 	);

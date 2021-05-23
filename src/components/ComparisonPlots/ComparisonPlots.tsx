@@ -8,14 +8,15 @@ export interface ComparisonPlotsProps {
 	partyMean: DataItem[];
 	political: DataItem[];
 	politicalMean: DataItem[];
+	meanTitle?: string
 }
 
 export const ComparisonPlots = ({
 	name,
 	party,
 	partyMean,
-	political,
 	politicalMean,
+	meanTitle = "Mean"
 }: ComparisonPlotsProps): JSX.Element => {
 	return (
 		<>
@@ -24,14 +25,14 @@ export const ComparisonPlots = ({
 			</BarChartWrapper>
 
 			<BarChartWrapper
-				name={`${name} Mean - Leaders (by party)`}
+				name={`${name} ${meanTitle} - Leaders (by party)`}
 				data={partyMean}
 			>
 				<Bar dataKey="value" name={name} fill="#8884d8" />
 			</BarChartWrapper>
 
 			<BarChartWrapper
-				name={`${name} Mean - Content`}
+				name={`${name} ${meanTitle} - Content`}
 				data={politicalMean}
 			>
 				<Bar dataKey="value" name={name} fill="#8884d8" />
