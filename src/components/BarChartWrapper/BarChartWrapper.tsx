@@ -9,6 +9,7 @@ import {
 	YAxis,
 } from "recharts";
 import { ScaleType } from "recharts/types/util/types";
+import { numberWithCommas } from "utils";
 import styles from "./BarChartWrapper.module.css";
 
 export interface BarChartWrapperProps {
@@ -32,7 +33,7 @@ export const BarChartWrapper = ({
 				<CartesianGrid strokeDasharray="3 3" />
 				<XAxis type="number" scale={scale} domain={[0.01, "auto"]} />
 				<YAxis dataKey="name" type="category" tick width={150} />
-				<Tooltip />
+				<Tooltip formatter={(value: number) => numberWithCommas(value)} />
 				<Legend
 					formatter={(value) => (
 						<div>
