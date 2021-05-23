@@ -1,0 +1,101 @@
+---
+title: "COMP90024 A2 Electorate Vote Statistical Model Analysis/Tests"
+author: "Richard Yang"
+date: "23/05/2021"
+output: html_document
+---
+
+Likes vs Votes
+
+```{r setup, include=FALSE}
+
+
+likesVsVotes<- read.csv("likesVsVotes.csv")
+
+model_likes_votes <- lm(likesVsVotes$x ~ likesVsVotes$y , data=likesVsVotes)
+
+# Breusch-Pagan test
+car::ncvTest(model_likes_votes)
+
+#plot(model_likes_votes)
+shapiro.test(model_likes_votes$residuals)
+nortest::lillie.test(model_likes_votes$residuals)
+car::durbinWatsonTest(model_likes_votes)
+```
+```{r}
+summary(model_likes_votes)
+```
+
+
+Retweet vs Votes
+
+```{r setup, include=FALSE}
+retweetsVsVotes<- read.csv("retweetsVsVotes.csv")
+
+model_rt_votes <- lm(retweetsVsVotes$x ~ retweetsVsVotes$y , data=retweetsVsVotes)
+
+# Breusch-Pagan test
+car::ncvTest(model_rt_votes)
+
+#plot(model_likes_votes)
+shapiro.test(model_rt_votes$residuals)
+nortest::lillie.test(model_rt_votes$residuals)
+car::durbinWatsonTest(model_rt_votes)
+
+```
+
+```{r}
+summary(model_rt_votes)
+```
+
+Sentiment vs Votes
+```{r}
+sentimentVsVotes<- read.csv("sentimentVsVotes.csv")
+
+model_sent_votes <- lm(sentimentVsVotes$x ~ sentimentVsVotes$y , data=sentimentVsVotes)
+
+# Breusch-Pagan test
+car::ncvTest(model_sent_votes)
+
+#plot(model_likes_votes)
+shapiro.test(model_sent_votes$residuals)
+nortest::lillie.test(model_sent_votes$residuals)
+car::durbinWatsonTest(model_sent_votes)
+
+model_tweetcount_votes
+```
+
+
+```{r}
+summary(model_sent_votes)
+```
+Tweet vs Votes
+```{r}
+tweetsVsVotes<- read.csv("tweetsVsVotes.csv")
+
+model_tweetcount_votes <- lm(tweetsVsVotes$x ~ tweetsVsVotes$y , data=tweetsVsVotes)
+
+#test normality
+plot(model_tweetcount_votes, 2)
+#plot(model_likes_votes)
+shapiro.test(model_tweetcount_votes$residuals)
+nortest::lillie.test(model_tweetcount_votes$residuals)
+
+# Breusch-Pagan test
+car::ncvTest(model_tweetcount_votes)
+
+#absence of autocorrelation
+car::durbinWatsonTest(model_tweetcount_votes)
+lag.plot(model_tweetcount_votes$residuals, lags = 1, do.lines = FALSE)
+```
+
+```{r}
+summary(model_tweetcount_votes)
+```
+
+```{r}
+plot(model_tweetcount_votes, which=5
+)
+```
+
+
