@@ -33,7 +33,7 @@ export const generalComparisonsCountSelector = (
 				continue;
 			}
 
-			const attrs = value.count?.[dataKey];
+			const attrs = value?.[dataKey];
 			if (attrs === undefined) {
 				continue;
 			}
@@ -50,7 +50,10 @@ export const generalComparisonsCountSelector = (
 };
 
 export const generalComparisonsSelector = (
-	dataKey: Exclude<keyof GeneralComparisonsItem, "count">,
+	dataKey: Exclude<
+		keyof GeneralComparisonsItem,
+		"sentiment" | "retweets" | "likes"
+	>,
 	getAverage: boolean = false,
 	pick?: Set<keyof GeneralComparisonsState>,
 ) => (store: Store): DataItem[] => {
