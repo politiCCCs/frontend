@@ -1,3 +1,12 @@
+/*
+ * COMP90024 Cluster and Cloud Computing
+ * Group 5
+ * Aleksandar Pasquini (912504)
+ * Amelia Fleischer-Boermans (389511)
+ * Isaac Daly (1129173)
+ * Mahardini Rizky Putri (921790)
+ * Richard Yang (1215150)
+ */
 import { ReactElement } from "react";
 import {
 	BarChart,
@@ -9,7 +18,7 @@ import {
 	YAxis,
 } from "recharts";
 import { ScaleType } from "recharts/types/util/types";
-import { numberWithCommas } from "utils";
+import { numberWithCommas } from "../../utils";
 import styles from "./BarChartWrapper.module.css";
 
 export interface BarChartWrapperProps {

@@ -1,3 +1,12 @@
+<!--
+COMP90024 Cluster and Cloud Computing
+Group 5
+Aleksandar Pasquini (912504)
+Amelia Fleischer-Boermans (389511)
+Isaac Daly (1129173)
+Mahardini Rizky Putri (921790)
+Richard Yang (1215150)
+-->
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

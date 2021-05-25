@@ -1,4 +1,12 @@
-// Based on https://stackoverflow.com/a/2901298/5018082
+/*
+ * COMP90024 Cluster and Cloud Computing
+ * Group 5
+ * Aleksandar Pasquini (912504)
+ * Amelia Fleischer-Boermans (389511)
+ * Isaac Daly (1129173)
+ * Mahardini Rizky Putri (921790)
+ * Richard Yang (1215150)
+ */
 export const numberWithCommas = (x: string | number | undefined): string => {
 	if (x === undefined) {
 		return "";

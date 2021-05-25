@@ -1,3 +1,13 @@
+/*
+ * COMP90024 Cluster and Cloud Computing
+ * Group 5
+ * Aleksandar Pasquini (912504)
+ * Amelia Fleischer-Boermans (389511)
+ * Isaac Daly (1129173)
+ * Mahardini Rizky Putri (921790)
+ * Richard Yang (1215150)
+ */
+
 /* eslint-disable react/prop-types */
 /* eslint-disable react/display-name */
 import { Cell, RowHeaderCell, Table, Utils } from "@blueprintjs/table";

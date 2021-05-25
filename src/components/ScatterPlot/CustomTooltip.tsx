@@ -1,6 +1,15 @@
+/*
+ * COMP90024 Cluster and Cloud Computing
+ * Group 5
+ * Aleksandar Pasquini (912504)
+ * Amelia Fleischer-Boermans (389511)
+ * Isaac Daly (1129173)
+ * Mahardini Rizky Putri (921790)
+ * Richard Yang (1215150)
+ */
 import { MapTable, MapTableRow } from "components/MapTable";
 import { ComparisonData } from "state/politicianSelectors";
-import { numberWithCommas } from "utils";
+import { numberWithCommas } from "../../utils";
 import styles from "./CustomTooltip.module.css";
 
 interface Payload {
