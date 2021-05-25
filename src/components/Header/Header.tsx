@@ -8,7 +8,7 @@
  * Richard Yang (1215150)
  */
 import { AnchorButton, Classes, Navbar } from "@blueprintjs/core";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
 import styles from "./Header.module.css";
@@ -16,18 +16,24 @@ import styles from "./Header.module.css";
 export const Header = (): JSX.Element => {
 	const location = useLocation();
 	const history = useHistory();
+	const [currentLocation, setCurrentLocation] = useState("Home");
 
-	const currentLocation = useMemo(() => {
+	useEffect(() => {
 		const parts = location.pathname.split("/");
 		const path = parts[parts.length - 1];
 
 		switch (path) {
 			case "electorates":
-				return "Electorates";
-			default:
-				return "Home";
+				return setCurrentLocation("Electorates");
+			case "correlations":
+				return setCurrentLocation("Correlations");
+			case "general":
+				return setCurrentLocation("General Comparisons");
 		}
-	}, [location.pathname]);
+
+		// not a valid path
+		history.push("/");
+	}, []);
 
 	const onClick = useCallback(() => {
 		history.push("/");
@@ -37,9 +43,9 @@ export const Header = (): JSX.Element => {
 		<Navbar>
 			<Navbar.Group>
 				<AnchorButton href="/" className={Classes.MINIMAL}>
-						<Navbar.Heading className={styles.headerText} onClick={onClick}>
-							politicccs
-						</Navbar.Heading>
+					<Navbar.Heading className={styles.headerText} onClick={onClick}>
+						politicccs
+					</Navbar.Heading>
 				</AnchorButton>
 				<Navbar.Divider />
 				<Navbar.Heading>{currentLocation}</Navbar.Heading>
