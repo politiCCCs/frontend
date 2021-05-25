@@ -8,7 +8,7 @@
  * Richard Yang (1215150)
  */
 import { AnchorButton, Classes, Navbar } from "@blueprintjs/core";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
 import styles from "./Header.module.css";
